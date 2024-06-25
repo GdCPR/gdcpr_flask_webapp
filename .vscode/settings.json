@@ -1,5 +1,5 @@
 {
     "python.analysis.typeCheckingMode": "basic",
-    "python.analysis.autoImportCompletions": true,
+    "python.analysis.autoImportCompletions": false,
     "jupyter.kernels.excludePythonEnvironments": ["/usr/local/bin/python", "/usr/local/python/current/bin/python"]
 }
