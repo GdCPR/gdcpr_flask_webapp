@@ -5,7 +5,7 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 
 	// Path of docker compose files relative to devcontainer.json file
-	"dockerComposeFile": "docker-compose.yml",
+	"dockerComposeFile": "../../docker-compose.yml",
 	
 	// Service VS Code should connect to once running
 	"service": "webscrapper",

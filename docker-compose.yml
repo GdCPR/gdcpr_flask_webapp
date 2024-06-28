@@ -1,0 +1,29 @@
+# x-environment:
+#     &default-environment
+#     MYSQL_ROOT_PASSWORD: strongpass
+
+services:
+    webscrapper:
+        build:
+            context: .
+            dockerfile: .devcontainer/python-container/Dockerfile
+        # environment:
+        #     <<: *default-environment
+        #     PORT: 3000
+        # ports:
+        #     - 3000:3000
+        volumes:
+            - .:/workspace
+        # user: vscode
+        # network_mode: service:db
+        command: sleep infinity
+#     db:
+#         image: "mysql:8.4.0"
+#         restart: unless-stopped
+#         environment: *default-environment
+#         ports:
+#             - 5432:5432
+#         volumes:
+#             - mysql-data:/var/lib/mysql/data
+# volumes:
+#     mysql-data:
