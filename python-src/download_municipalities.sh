@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variable for resources workspace and repo dir 
-resources_dir=/workspaces/web-scrapper/resources
+resources_dir=/workspaces/web-scrapper/python/resources
 repo_dir=8560382
 
 # If resources dir do not exist, create it
