@@ -13,7 +13,7 @@ services:
         # ports:
         #     - 3000:3000
         volumes:
-            - .:/workspace
+            - ..:/workspaces:cached
         # user: vscode
         # network_mode: service:db
         command: sleep infinity
