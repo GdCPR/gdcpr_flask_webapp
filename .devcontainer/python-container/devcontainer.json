@@ -1,11 +1,11 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "Python 3",
+	"name": "python",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 
 	// Path of docker compose files relative to devcontainer.json file
-	"dockerComposeFile": ["../../docker-compose.yml"],
+	"dockerComposeFile": ["../docker-compose.yml"],
 	
 	// Service VS Code should connect to once running
 	"service": "webscrapper",
@@ -26,7 +26,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash ./.devcontainer/post_install.sh",
+	"postCreateCommand": "bash post_install.sh",
 
 	// Configure tool-specific properties.
 	"customizations": {
