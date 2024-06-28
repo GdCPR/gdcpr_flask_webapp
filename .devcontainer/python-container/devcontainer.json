@@ -1,52 +1,60 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "python",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-
-	// Path of docker compose files relative to devcontainer.json file
-	"dockerComposeFile": ["../docker-compose.yml"],
-	
-	// Service VS Code should connect to once running
+	"name": "Python Container",
+	"dockerComposeFile": ["../../docker-compose.yml"],
 	"service": "webscrapper",
-
-	// Default path VS Code open when connecting to the container
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-    
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	"features": {
-		"ghcr.io/devcontainers/features/python:1": {
-			"installTools": true,
-			"installJupyterlab": true,
-			"version": "latest"
-		}
-	},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash post_install.sh",
-
-	// Configure tool-specific properties.
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-toolsai.jupyter",
-				"ms-toolsai.vscode-jupyter-cell-tags",
-				"ms-toolsai.jupyter-renderers",
-				"ms-toolsai.vscode-jupyter-slideshow",
-				"ms-python.vscode-pylance",
-				"ms-toolsai.jupyter-keymap"
-			],
-			"settings": {
-				"python.languageServer": "Pylance",
-				"python.analysis.typeCheckingMode": "basic",
-				"python.analysis.autoImportCompletions": true,
-				"jupyter.kernels.excludePythonEnvironments": ["/usr/local/bin/python", "/usr/local/python/current/bin/python"]}
-		}
-	}
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"shutdownAction": "none",
+	"workspaceFolder": "/workspace"
 }
+
+// // For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// // README at: https://github.com/devcontainers/templates/tree/main/src/python
+// {
+// 	"name": "python",
+// 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+
+// 	// Path of docker compose files relative to devcontainer.json file
+// 	"dockerComposeFile": ["../docker-compose.yml"],
+	
+// 	// Service VS Code should connect to once running
+// 	"service": "webscrapper",
+
+// 	// Default path VS Code open when connecting to the container
+// 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    
+// 	// Features to add to the dev container. More info: https://containers.dev/features.
+// 	"features": {
+// 		"ghcr.io/devcontainers/features/python:1": {
+// 			"installTools": true,
+// 			"installJupyterlab": true,
+// 			"version": "latest"
+// 		}
+// 	},
+
+// 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+// 	// "forwardPorts": [],
+
+// 	// Use 'postCreateCommand' to run commands after the container is created.
+// 	"postCreateCommand": "bash post_install.sh",
+
+// 	// Configure tool-specific properties.
+// 	"customizations": {
+// 		"vscode": {
+// 			"extensions": [
+// 				"ms-toolsai.jupyter",
+// 				"ms-toolsai.vscode-jupyter-cell-tags",
+// 				"ms-toolsai.jupyter-renderers",
+// 				"ms-toolsai.vscode-jupyter-slideshow",
+// 				"ms-python.vscode-pylance",
+// 				"ms-toolsai.jupyter-keymap"
+// 			],
+// 			"settings": {
+// 				"python.languageServer": "Pylance",
+// 				"python.analysis.typeCheckingMode": "basic",
+// 				"python.analysis.autoImportCompletions": true,
+// 				"jupyter.kernels.excludePythonEnvironments": ["/usr/local/bin/python", "/usr/local/python/current/bin/python"]}
+// 		}
+// 	}
+
+// 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+// 	// "remoteUser": "root"
+// }

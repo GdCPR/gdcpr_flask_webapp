@@ -1,29 +1,42 @@
-# x-environment:
-#     &default-environment
-#     MYSQL_ROOT_PASSWORD: strongpass
-
 services:
-    webscrapper:
-        build:
-            context: .
-            dockerfile: .devcontainer/python-container/Dockerfile
-        # environment:
-        #     <<: *default-environment
-        #     PORT: 3000
-        # ports:
-        #     - 3000:3000
-        volumes:
-            - ..:/workspaces:cached
-        # user: vscode
-        # network_mode: service:db
-        command: sleep infinity
-#     db:
-#         image: "mysql:8.4.0"
-#         restart: unless-stopped
-#         environment: *default-environment
-#         ports:
-#             - 5432:5432
+  webscrapper:
+    build:
+        context: .
+        dockerfile: .devcontainer/python-container/Dockerfile
+    volumes:
+      # Mount the root folder that contains .git
+      - .:/workspace:cached
+    command: sleep infinity
+    # links:
+    #   - app
+    # # ...
+
+# # x-environment:
+# #     &default-environment
+# #     MYSQL_ROOT_PASSWORD: strongpass
+
+# services:
+#     webscrapper:
+#         build:
+#             context: .
+#             dockerfile: .devcontainer/python-container/Dockerfile
+#         # environment:
+#         #     <<: *default-environment
+#         #     PORT: 3000
+#         # ports:
+#         #     - 3000:3000
 #         volumes:
-#             - mysql-data:/var/lib/mysql/data
-# volumes:
-#     mysql-data:
+#             - ..:/workspaces:cached
+#         # user: vscode
+#         # network_mode: service:db
+#         command: sleep infinity
+# #     db:
+# #         image: "mysql:8.4.0"
+# #         restart: unless-stopped
+# #         environment: *default-environment
+# #         ports:
+# #             - 5432:5432
+# #         volumes:
+# #             - mysql-data:/var/lib/mysql/data
+# # volumes:
+# #     mysql-data:
