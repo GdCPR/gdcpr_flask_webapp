@@ -2,9 +2,9 @@
 FROM "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye"
 
 # Variables to be used
-ARG USERNAME=vscode
-ARG USER_ID=1000
-ARG USER_GID=$USER_ID
+# ARG USERNAME=vscode
+# ARG USER_ID=1000
+# ARG USER_GID=$USER_ID
 
 # Turn off prompt ask user for permissions
 ENV DEBIAN_FRONTEND=noninteractive
@@ -21,9 +21,9 @@ RUN apt-get -y upgrade
 # # Update/upgrade pip
 # RUN pip install --upgrade pip
 
-# # Install requirements
-# COPY requirements.txt ./
-# RUN yes | pip install -r requirements.txt
+# Install requirements
+COPY requirements.txt ./
+RUN yes | pip install -r requirements.txt
 
 # Remove dependencies no longer used 
 RUN apt-get autoremove -y

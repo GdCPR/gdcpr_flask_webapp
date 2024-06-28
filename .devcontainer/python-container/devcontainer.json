@@ -3,7 +3,8 @@
 	"dockerComposeFile": ["../../docker-compose.yml"],
 	"service": "webscrapper",
 	"shutdownAction": "none",
-	"workspaceFolder": "/workspace"
+	"workspaceFolder": "/workspace",
+	"postCreateCommand": "bash post_install.sh"
 }
 
 // // For format details, see https://aka.ms/devcontainer.json. For config options, see the
