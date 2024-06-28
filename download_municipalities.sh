@@ -1,15 +1,22 @@
 #!/bin/bash
 
-# Clone repo to temporary folder
-if [ ! -d /path/to/directory ]; then
-    mkdir resources
+# Variable for resources workspace and repo dir 
+resources_dir=/workspaces/web-scrapper/resources
+repo_dir=8560382
+
+# If resources dir do not exist, create it
+if [ ! -d $resources_dir ]; then
+    mkdir $resources_dir
 fi
 
+# Change working dir
+cd $resources_dir
 
-cd resources/
+# clone repo
 git clone https://gist.github.com/8560382.git
 
+# Change file name and format to txt
+mv -f $resources/$repo_dir/flat_puerto_rico_municipalities $resources_dir/puerto_rico_municipalities.txt
 
-mv -f /workspaces/web-scrapper/resources/8560382/flat_puerto_rico_municipalities /workspaces/web-scrapper/resources/puerto_rico_municipalities.txt
-
-rm -r -f /workspaces/web-scrapper/resources/8560382/
+# Delete copied repo
+rm -rf $repo_dir
