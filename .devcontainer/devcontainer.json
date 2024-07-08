@@ -10,7 +10,7 @@
 	"shutdownAction": "none",
 	
 	// Service VS Code should connect to once running
-	"service": "webscrapper",
+	"service": "python-backend",
 
 	// Default path VS Code open when connecting to the container
 	"workspaceFolder": "/workspace",
