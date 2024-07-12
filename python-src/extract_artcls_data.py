@@ -1,4 +1,5 @@
 import requests
+import dateparser
 from bs4 import BeautifulSoup, element
 
 
@@ -43,10 +44,10 @@ def artcl_data(article: element.Tag) -> dict: # type: ignore
         try:
             # Extract article title 
             # Create an iterator to separate headline from subheadline
-            iterator= article.find(name= 'h3',
-                                   attrs= {'class':'standard-teaser-headline teaser-headline'}).stripped_strings
+            headline_iterator= article.find(name= 'h3',
+                                            attrs= {'class':'standard-teaser-headline teaser-headline'}).stripped_strings
             # Fetch the first item only which corresponds to the headline
-            article_headline= next(iterator)
+            article_headline= next(headline_iterator)
 
             
             # Extract article path
@@ -79,10 +80,19 @@ def artcl_content(article_data: dict) -> dict:
     headline_sub= article_soup.find(name= "div",
                                     attrs= {"class": "article-headline__subheadline"}).text # type: ignore
     
-    article_date_time= (article_soup.find(name= "div",
-                                          attrs= {"class": "article-headline__date"}).text).split("-") # type: ignore
-    article_date= article_date_time[0].strip()
-    article_time= article_date_time[1].strip()
+    #------------------------------------------------------------------------------------------------------------#
+    # Extract date and time
+    # Create an iterator to separate string if there was an update annotation
+    # Convert iterator in a list and split string
+    article_date_time_list= list(article_soup.find(name= "div",
+                                                       attrs= {"class": "article-headline__date"}).stripped_strings)[0].split("-")
+    # Save date and time in separated variables
+    article_date= article_date_time_list[0].strip()
+    article_time= article_date_time_list[1].strip()
+    # Parse date and time variables with dateparser
+    article_date_time= dateparser.parse("{} {}".format(article_date, article_time))       
+    #------------------------------------------------------------------------------------------------------------#
+
     
     article_content= article_soup.find_all(name= "p",
                                            attrs= {"class": "content-element"})
@@ -91,6 +101,5 @@ def artcl_content(article_data: dict) -> dict:
     content= " ".join(content)
     
     return {"headline_sub": headline_sub,
-            "date": article_date,
-            "time": article_time,
+            "date_time": article_date_time,
             "content": content}
