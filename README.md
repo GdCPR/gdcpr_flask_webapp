@@ -1,2 +1,2 @@
-# web-scrapper
-Este repositorio contiene el código fuente del "web scrapper".
+# GdCPR Webapp Codebase
+Este repositorio contiene el código base de la webapp "Geolocalización del Crimen en Puerto Rico" (GdCPR).
