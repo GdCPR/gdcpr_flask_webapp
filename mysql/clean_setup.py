@@ -28,7 +28,7 @@ logging.warning(f"    [{datetime.now()}]    Tables removed!")
 
 logging.warning(f"    [{datetime.now()}]    Creating table: {artsTB}")
 # Query: Create Articles table
-create_artsTb_query= f"""
+create_artsTb_query = f"""
 CREATE TABLE IF NOT EXISTS {artsTB} (
                                     ArticleID INTEGER,
                                     URL VARCHAR(1024) NOT NULL, 
@@ -44,7 +44,7 @@ logging.warning(f"    [{datetime.now()}]    **Table created**")
 
 logging.warning(f"    [{datetime.now()}]    Creating table: {locTB}")
 # Query: Create Location table
-create_locTb_query= f"""
+create_locTb_query = f"""
 CREATE TABLE IF NOT EXISTS {locTB} (
                                     LocationID INTEGER,
                                     Name VARCHAR(1024),
@@ -56,11 +56,14 @@ logging.warning(f"    [{datetime.now()}]    **Table created**")
 
 logging.warning(f"    [{datetime.now()}]    Creating table: {artslocrelTB}")
 # Query: Create Article-Location Bridge table
-create_artslocrelTB_query= f"""
+create_artslocrelTB_query = f"""
 CREATE TABLE IF NOT EXISTS {artslocrelTB} (
-                                            LocationID INTEGER,
-                                            Name VARCHAR(1024),
-                                            PRIMARY KEY (LocationID)
+                                            ArticleID INTEGER NOT NULL,
+                                            LocationID INTEGER NOT NULL,
+                                            FOREIGN KEY (ArticleID) REFERENCES {artsTB}(ArticleID),
+                                            FOREIGN KEY (LocationID) REFERENCES {locTB}(LocationID),
+                                            INDEX (ArticleID, LocationID),
+                                            UNIQUE (ArticleID, LocationID)
                                             )
 """
 cursor.execute(create_artslocrelTB_query)
