@@ -6,4 +6,4 @@ pip install --upgrade pip
 cd .
 
 # Install requirements
-yes | pip install -r requirements.txt
+yes | pip install -r requirements.txt --ignore-installed
