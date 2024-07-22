@@ -63,14 +63,14 @@ def artcl_data(article: element.Tag) -> dict: # type: ignore
     # Create article full url
     article_url = f"https://www.elnuevodia.com{article_path}".format(article_path)
 
-    # Extract article autho
+    # Extract article author
     html_attrs_dict = {"class": "authors-byline-text"}
     article_author = article.find(name="div",
                                     attrs=html_attrs_dict).text.strip() # type: ignore
 
     # Return dictionary with data
-    return {"headline": article_headline,
-            "url": article_url,
+    return {"url": article_url,
+            "headline": article_headline,
             "author": article_author}
 
 ####################################################################
@@ -112,6 +112,6 @@ def artcl_content(article_data: dict) -> dict:
         content.append(__.text)
     content = " ".join(content)
 
-    return {"headline_sub": headline_sub,
-            "date_time": article_date_time,
+    return {"subheadline": headline_sub,
+            "datetime": article_date_time.strftime('%Y-%m-%d %H:%M:%S'),
             "content": content}

@@ -11,6 +11,8 @@ for the first time!
 """
 import logging
 from datetime import datetime
+from unidecode import unidecode
+import pandas as pd
 from database_connector import dbconnection as db
 
 cursor = db.cursor(buffered=True)
@@ -18,6 +20,16 @@ cursor = db.cursor(buffered=True)
 ARTS_TB = "Articles"
 LOC_TB = "Location"
 ARTS_LOC_TB = "ArticlesLocationRelation"
+
+####################################################################################
+####################################################################################
+logging.warning("    [%s]    Disabling  strict SQL mode", datetime.now())
+
+query = """SET GLOBAL sql_mode=''"""
+cursor.execute(query)
+
+####################################################################################
+####################################################################################
 
 logging.warning("    [%s]    Removing tables: %s, %s, %s",
                 datetime.now() ,ARTS_TB, LOC_TB, ARTS_LOC_TB)
@@ -29,11 +41,14 @@ cursor.execute(query)
 
 logging.warning("    [%s]    Tables removed!", datetime.now())
 
+####################################################################################
+####################################################################################
+
 logging.warning("    [%s]    Creating table: %s", datetime.now(), ARTS_TB)
 # Query: Create Articles table
 create_artsTb_query = f"""
 CREATE TABLE IF NOT EXISTS {ARTS_TB} (
-                                    ArticleID INTEGER,
+                                    ArticleID INTEGER AUTO_INCREMENT,
                                     URL VARCHAR(1024) NOT NULL, 
                                     Headline VARCHAR(1024) NOT NULL,
                                     Subheadline VARCHAR(1024) NOT NULL,
@@ -45,17 +60,39 @@ CREATE TABLE IF NOT EXISTS {ARTS_TB} (
 cursor.execute(create_artsTb_query)
 logging.warning("    [%s]    **Table created**", datetime.now())
 
+####################################################################################
+####################################################################################
+
+municipalities_df = pd.read_csv("resources/puerto_rico_municipalities.txt",
+                                sep=" ",
+                                header=None,
+                                names=["municipality"])
+# Filter for the first table and unique values from the Pueblos Column
+municipalities_list = [unidecode(municipality)
+                       for municipality in municipalities_df["municipality"].values]
+municipalities_list.sort()
+
 logging.warning("    [%s]    Creating table: %s", datetime.now(), LOC_TB)
 # Query: Create Location table
 create_locTb_query = f"""
 CREATE TABLE IF NOT EXISTS {LOC_TB} (
-                                    LocationID INTEGER,
+                                    LocationID INTEGER AUTO_INCREMENT,
                                     Name VARCHAR(1024),
                                     PRIMARY KEY (LocationID)
                                     )
 """
 cursor.execute(create_locTb_query)
+
+logging.warning("    [%s]    Inserting data into Location table", datetime.now())
+query = """INSERT INTO Location (Name) VALUES (%(Name)s)"""
+for loc in municipalities_list:
+    data = {"Name": loc}
+    cursor.execute(query, data)
+
 logging.warning("    [%s]    **Table created**", datetime.now())
+
+####################################################################################
+####################################################################################
 
 logging.warning("    [%s]    Creating table: %s", datetime.now(), ARTS_LOC_TB)
 # Query: Create Article-Location Bridge table
@@ -73,7 +110,10 @@ CREATE TABLE IF NOT EXISTS {ARTS_LOC_TB} (
 """
 cursor.execute(create_artslocrelTB_query)
 logging.warning("    [%s]    **Table created**", datetime.now())
+####################################################################################
+####################################################################################
 
 logging.warning("    [%s]    Schema cleaned and ready!", datetime.now())
 
 db.commit()
+db.close()
