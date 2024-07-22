@@ -9,6 +9,7 @@ for the first time!
 #####################################################################
 #####################################################################
 """
+import os
 import logging
 from datetime import datetime
 from unidecode import unidecode
@@ -19,7 +20,7 @@ cursor = db.cursor(buffered=True)
 
 ARTS_TB = "Articles"
 LOC_TB = "Location"
-ARTS_LOC_TB = "ArticlesLocationRelation"
+ARTS_LOC_REL_TB = "ArticlesLocationRelation"
 
 ####################################################################################
 ####################################################################################
@@ -32,11 +33,11 @@ cursor.execute(query)
 ####################################################################################
 
 logging.warning("    [%s]    Removing tables: %s, %s, %s",
-                datetime.now() ,ARTS_TB, LOC_TB, ARTS_LOC_TB)
+                datetime.now() ,ARTS_TB, LOC_TB, ARTS_LOC_REL_TB)
 
 # logging.warning(f"    [{datetime.now()}]    Removing tables: {ARTS_TB}, {LOC_TB}, {ARTS_LOC_TB}")
 
-query = f"""DROP TABLE IF EXISTS {ARTS_TB}, {LOC_TB}, {ARTS_LOC_TB}"""
+query = f"""DROP TABLE IF EXISTS {ARTS_TB}, {LOC_TB}, {ARTS_LOC_REL_TB}"""
 cursor.execute(query)
 
 logging.warning("    [%s]    Tables removed!", datetime.now())
@@ -54,6 +55,7 @@ CREATE TABLE IF NOT EXISTS {ARTS_TB} (
                                     Subheadline VARCHAR(1024) NOT NULL,
                                     Author VARCHAR(1024) NOT NULL,
                                     DateTime DATETIME,
+                                    Hash VARCHAR(1024) NOT NULL,
                                     PRIMARY KEY (ArticleID)
                                     )
 """
@@ -63,7 +65,9 @@ logging.warning("    [%s]    **Table created**", datetime.now())
 ####################################################################################
 ####################################################################################
 
-municipalities_df = pd.read_csv("resources/puerto_rico_municipalities.txt",
+dirname = os.path.dirname(__file__)
+filepath = os.path.join(dirname, "resources/puerto_rico_municipalities.txt")
+municipalities_df = pd.read_csv(filepath,
                                 sep=" ",
                                 header=None,
                                 names=["municipality"])
@@ -94,10 +98,10 @@ logging.warning("    [%s]    **Table created**", datetime.now())
 ####################################################################################
 ####################################################################################
 
-logging.warning("    [%s]    Creating table: %s", datetime.now(), ARTS_LOC_TB)
+logging.warning("    [%s]    Creating table: %s", datetime.now(), ARTS_LOC_REL_TB)
 # Query: Create Article-Location Bridge table
 create_artslocrelTB_query = f"""
-CREATE TABLE IF NOT EXISTS {ARTS_LOC_TB} (
+CREATE TABLE IF NOT EXISTS {ARTS_LOC_REL_TB} (
                                             ArticleID INTEGER NOT NULL,
                                             LocationID INTEGER NOT NULL,
                                             FOREIGN KEY (ArticleID)

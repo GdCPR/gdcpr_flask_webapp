@@ -1,6 +1,7 @@
 import requests
 import dateparser
 from bs4 import BeautifulSoup, element
+from scrapper.art_hash import get_hash
 
 ####################################################################
 ####################################################################
@@ -49,6 +50,9 @@ def artcl_data(article: element.Tag) -> dict: # type: ignore
         Error Counter
             when article not found
     """
+    # Get article hash
+    hash = get_hash(article=article)
+
     # Extract article title
     # Create an iterator to separate headline from subheadline
     html_attrs_dict = {'class':'standard-teaser-headline teaser-headline'}
@@ -71,7 +75,8 @@ def artcl_data(article: element.Tag) -> dict: # type: ignore
     # Return dictionary with data
     return {"url": article_url,
             "headline": article_headline,
-            "author": article_author}
+            "author": article_author,
+            "hash": hash}
 
 ####################################################################
 ####################################################################

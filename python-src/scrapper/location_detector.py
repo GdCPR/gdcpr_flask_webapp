@@ -10,7 +10,7 @@ npl= spacy.load("es_core_news_sm")
 
 def detect_location(article_data: dict) -> list:
     """
-    Function to detect location based on articles headline, subheadline, and content
+    Detect location from article headline, subheadline, and content.
     """    
 
     # Get article content
@@ -37,7 +37,7 @@ def detect_location(article_data: dict) -> list:
 
     return loc_found
 
-def validate_location(locations: list) -> set:
+def validate_location(location: list) -> set:
     """
     """
     # Retrieve locations from database
@@ -50,11 +50,13 @@ def validate_location(locations: list) -> set:
     # Create a list from row Name fields
     locs_official = [row[1] for row in locs_fetch]
 
-    locs_validated = set(locations) & set(locs_official)
-    
+    locs_validated = set(location) & set(locs_official)
+
     return locs_validated
 
 def get_location_id(validated_location: str) -> int:
+    """
+    """
 
    # Retrieve locations from database
     query = """SELECT * FROM Location"""
