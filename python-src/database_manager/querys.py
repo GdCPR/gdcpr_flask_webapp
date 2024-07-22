@@ -6,3 +6,6 @@ INSERT INTO Articles (URL,
                       DateTime)
 VALUES (%(url)s, %(headline)s, %(author)s, %(subheadline)s, %(datetime)s)
 """
+
+INSERT_LOCATION = """
+"""
