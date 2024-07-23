@@ -82,6 +82,7 @@ create_locTb_query = f"""
 CREATE TABLE IF NOT EXISTS {LOC_TB} (
                                     LocationID INTEGER AUTO_INCREMENT,
                                     Name VARCHAR(1024),
+                                    RelevanceScore DOUBLE DEFAULT 0,
                                     PRIMARY KEY (LocationID)
                                     )
 """
