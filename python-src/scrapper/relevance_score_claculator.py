@@ -15,7 +15,7 @@ def calculate_score(location_id: int):
     # Create dict to send to query
     data = {"locationid": location_id}
     
-    # Execute qury to count
+    # Execute query to count
     cursor.execute(querys.COUNT, data) # type: ignore
 
     # Fetch result and extract the value from returned tuple
