@@ -17,3 +17,14 @@ VALUES (%(articleid)s, %(locationid)s)
 FETCH_HASHES = """
 SELECT Hash FROM Articles
 """
+
+COUNT = """
+SELECT COUNT(*) FROM ArticlesLocationRelation WHERE LocationID = %(locationid)s
+"""
+
+ARTICLE_MAXID = """
+SELECT *
+FROM Articles
+ORDER BY ArticleID
+DESC LIMIT 1
+"""

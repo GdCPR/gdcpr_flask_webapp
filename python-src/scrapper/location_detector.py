@@ -2,9 +2,6 @@ import spacy
 from unidecode import unidecode
 from database_manager.database_connector import dbconnection as db
 
-# Create database cursor object
-cursor = db.cursor()
-
 # Load the model
 npl= spacy.load("es_core_news_sm")
 
@@ -40,6 +37,10 @@ def detect_location(article_data: dict) -> list:
 def validate_location(location: list) -> set:
     """
     """
+    # Create database cursor object
+    db.reconnect()
+    cursor = db.cursor()
+
     # Retrieve locations from database
     query = """SELECT * FROM Location"""
     cursor.execute(query)
@@ -57,6 +58,9 @@ def validate_location(location: list) -> set:
 def get_location_id(validated_location: str) -> int:
     """
     """
+    # Create database cursor object
+    db.reconnect()
+    cursor = db.cursor()
 
    # Retrieve locations from database
     query = """SELECT * FROM Location"""
@@ -64,7 +68,7 @@ def get_location_id(validated_location: str) -> int:
 
     # Fetch all rows
     locs_fetch = cursor.fetchall()
-
+    
     # Retrieve location id from database
     for row in locs_fetch:
         if validated_location == row[1]:
