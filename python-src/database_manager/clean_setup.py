@@ -66,7 +66,7 @@ logging.warning("    [%s]    **Table created**", datetime.now())
 ####################################################################################
 
 dirname = os.path.dirname(__file__)
-filepath = os.path.join(dirname, "resources/puerto_rico_municipalities.txt")
+filepath = os.path.join(dirname, "assets/puerto_rico_municipalities.txt")
 municipalities_df = pd.read_csv(filepath,
                                 sep=" ",
                                 header=None,
