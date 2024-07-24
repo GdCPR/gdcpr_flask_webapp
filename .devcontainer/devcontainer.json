@@ -28,7 +28,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash .devcontainer/python-backend/post_install.sh",
+	"postCreateCommand": "bash .devcontainer/development/post_install.sh",
 
 	// Configure tool-specific properties.
 	"customizations": {

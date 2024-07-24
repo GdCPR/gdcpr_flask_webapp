@@ -1,6 +1,6 @@
 import mysql.connector
 
-dbparameters = {"host": "mysql",
+dbparameters = {"host": "database",
                 "user": "root",
                 "password": "root",
                 "database": "db",

@@ -1,13 +1,18 @@
 # Select image to use
-FROM python:3.9.19-slim-bullseye
-
-WORKDIR endi_scrapper
+FROM python:3.12.4-slim-bullseye
 
 # Turn off prompt ask user for permissions
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update Linux
 RUN apt-get -y update --no-install-recommends
+
+# Install build essentials
+RUN apt-get -y install build-essential
+
+# RUN apt-get -y install gcc
+
+# RUN apt-get -y install python-devel libxslt-devel libffi-devel openssl-devel
 
 # Upgrade Linux
 RUN apt-get -y upgrade
@@ -20,10 +25,14 @@ RUN apt-get clean -y
 
 ENV DEBIAN_FRONTEND=dialog
 
-COPY requirements.txt .
+COPY ./scrapper/requirements.txt .
 
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip
 
-COPY scrapper .
+RUN pip install --upgrade setuptools
 
-CMD ["python", "/scrapper/main.py"]
+RUN pip install -r requirements.txt --ignore-installed
+
+COPY ./scrapper .
+
+CMD ["python", "/scrapper/database_manager/clean_setup.py", "/scrapper/main.py"]
