@@ -1,18 +1,28 @@
 version: '3.8'
 services:
-  python-backend:
+  development:
     build:
       context: ./
-      dockerfile: python-backend/Dockerfile
+      dockerfile: development/Dockerfile
     volumes:
       - ../..:/workspaces:cached
     command: sleep infinity
     depends_on:
-      - mysql
-  
-  mysql:
+      - database
+
+  scrapper:
     build:
-      context: ./.devcontainer/mysql/
+      context: ./
+      dockerfile: ./.devcontainer/scrapper/Dockerfile
+    volumes:
+      - ../..:workspaces:cached
+    command: sleep infinity
+    depends_on:
+      - database
+
+  database:
+    build:
+      context: ./.devcontainer/database/
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:

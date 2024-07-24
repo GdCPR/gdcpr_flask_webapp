@@ -10,7 +10,7 @@
 	"shutdownAction": "none",
 	
 	// Service VS Code should connect to once running
-	"service": "python-backend",
+	"service": "development",
 
 	// Default path VS Code open when connecting to the container
 	"workspaceFolder": "/workspace",
