@@ -8,7 +8,7 @@ from scrapper.relevance_score_claculator import calculate_score as score
 from database_manager.database_connector import dbconnection as db
 from database_manager import querys
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s', datefmt='%H:%M:%S')
+logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
 logging.info("    ! ! ! SCRAPPER WORKING ! ! !")
 # Base url
 news_url= "https://www.elnuevodia.com/noticias/seguridad"
@@ -97,5 +97,5 @@ while True:
         db.close()
     logging.info("    ********** ENDING SCAN **********")
     logging.info("    ********** Waiting 30 mins for next scan at: [%s] **********", 
-                 datetime.now() + timedelta(minutes=30))
+                 (datetime.now() - timedelta(hours=5)) + timedelta(minutes=30))
     time.sleep(1800)
