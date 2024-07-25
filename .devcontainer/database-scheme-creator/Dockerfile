@@ -25,7 +25,7 @@ RUN apt-get clean -y
 
 ENV DEBIAN_FRONTEND=dialog
 
-COPY ./scrapper/requirements.txt .
+COPY ./database-scheme-creator/requirements.txt .
 
 RUN pip install --upgrade pip
 
@@ -33,6 +33,6 @@ RUN pip install --upgrade setuptools
 
 RUN pip install -r requirements.txt --ignore-installed
 
-COPY ./scrapper/scrapper scrapper
+COPY ./database-scheme-creator/scrapper scrapper
 
-CMD ["python", "/scrapper/main.py"]
+CMD ["python", "/scrapper/database_manager/clean_setup.py"]

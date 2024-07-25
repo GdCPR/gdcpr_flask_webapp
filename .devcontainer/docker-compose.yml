@@ -1,26 +1,7 @@
-version: '3.8'
+name: GdCPR
 services:
-  development:
-    build:
-      context: ./
-      dockerfile: development/Dockerfile
-    volumes:
-      - ../..:/workspaces:cached
-    command: sleep infinity
-    depends_on:
-      - database
-
-  scrapper:
-    build:
-      context: ./
-      dockerfile: scrapper/Dockerfile
-    volumes:
-      - ../..:/workspaces:cached
-    command: sleep infinity
-    depends_on:
-      - database
-
   database:
+    container_name: database
     build:
       context: ./.devcontainer/database/
       dockerfile: Dockerfile
@@ -30,3 +11,44 @@ services:
       MYSQL_ROOT_PASSWORD: "root"
     ports:
       - "3306:3306"
+
+  development:
+    container_name: development
+    build:
+      context: ./
+      dockerfile: development/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    depends_on:
+      - database
+      - scrapper
+
+  database-scheme-creator:
+    container_name: database-scheme-creator
+    build:
+      context: ./
+      dockerfile: database-scheme-creator/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    depends_on:
+      wait-for-db:
+        condition: service_completed_successfully
+
+  scrapper:
+    container_name: scrapper
+    build:
+      context: ./
+      dockerfile: scrapper/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    depends_on:
+      database-scheme-creator:
+        condition: service_completed_successfully
+
+  wait-for-db:
+    container_name: wait-for-db
+    image: atkrad/wait4x
+    depends_on:
+      - database
+    command: tcp database:3306 -t 30s -i 250ms
