@@ -1,0 +1,4 @@
+datetime
+unidecode
+pandas
+mysql-connector-python

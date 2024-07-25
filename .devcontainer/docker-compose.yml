@@ -1,16 +1,58 @@
 name: GdCPR
 services:
+
+################################################################
+########################## db ##################################
+
   database:
     container_name: database
     build:
-      context: ./.devcontainer/database/
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: database/Dockerfile
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: "db"
       MYSQL_ROOT_PASSWORD: "root"
     ports:
       - "3306:3306"
+
+  wait-for-db:
+    container_name: wait-for-db
+    image: atkrad/wait4x
+    depends_on:
+      - database
+    command: tcp database:3306 -t 30s -i 250ms
+
+################################################################
+################## db-scheme-creator ###########################
+
+  db-scheme-creator:
+    container_name: db-scheme-creator
+    build:
+      context: ./
+      dockerfile: db-scheme-creator/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    depends_on:
+      wait-for-db:
+        condition: service_completed_successfully
+
+################################################################
+#################### endi-scrapper #############################
+
+  scrapper:
+    container_name: scrapper
+    build:
+      context: ./
+      dockerfile: scrapper/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    depends_on:
+      db-scheme-creator:
+        condition: service_completed_successfully
+
+################################################################
+########################## dev #################################
 
   development:
     container_name: development
@@ -23,32 +65,3 @@ services:
     depends_on:
       - database
       - scrapper
-
-  database-scheme-creator:
-    container_name: database-scheme-creator
-    build:
-      context: ./
-      dockerfile: database-scheme-creator/Dockerfile
-    volumes:
-      - ../..:/workspaces:cached
-    depends_on:
-      wait-for-db:
-        condition: service_completed_successfully
-
-  scrapper:
-    container_name: scrapper
-    build:
-      context: ./
-      dockerfile: scrapper/Dockerfile
-    volumes:
-      - ../..:/workspaces:cached
-    depends_on:
-      database-scheme-creator:
-        condition: service_completed_successfully
-
-  wait-for-db:
-    container_name: wait-for-db
-    image: atkrad/wait4x
-    depends_on:
-      - database
-    command: tcp database:3306 -t 30s -i 250ms

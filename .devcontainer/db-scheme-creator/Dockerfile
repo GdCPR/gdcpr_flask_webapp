@@ -10,10 +10,6 @@ RUN apt-get -y update --no-install-recommends
 # Install build essentials
 RUN apt-get -y install build-essential
 
-# RUN apt-get -y install gcc
-
-# RUN apt-get -y install python-devel libxslt-devel libffi-devel openssl-devel
-
 # Upgrade Linux
 RUN apt-get -y upgrade
 
@@ -23,16 +19,23 @@ RUN apt-get autoremove -y
 # Clears local repo of retrieved package files
 RUN apt-get clean -y
 
+# Turn on prompt ask user for permissions
 ENV DEBIAN_FRONTEND=dialog
 
-COPY ./database-scheme-creator/requirements.txt .
+# Copy python requirements file to container
+COPY ./db-scheme-creator/requirements.txt .
 
+# Upgrade pip
 RUN pip install --upgrade pip
 
+# Install setupstools
 RUN pip install --upgrade setuptools
 
+# Install python requirements
 RUN pip install -r requirements.txt --ignore-installed
 
-COPY ./database-scheme-creator/scrapper scrapper
+# Copy database manager to container
+COPY ./db-scheme-creator/db_manager db_manager
 
-CMD ["python", "/scrapper/database_manager/clean_setup.py"]
+# Run python script to create clean db scheme
+CMD ["python", "/db_manager/clean_setup.py"]

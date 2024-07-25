@@ -14,7 +14,7 @@ import logging
 from datetime import datetime
 from unidecode import unidecode
 import pandas as pd
-from database_connector import dbconnection as db
+from db_connector import dbconnection as db
 
 cursor = db.cursor(buffered=True)
 
