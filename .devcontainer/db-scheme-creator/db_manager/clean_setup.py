@@ -22,9 +22,11 @@ ARTS_TB = "Articles"
 LOC_TB = "Location"
 ARTS_LOC_REL_TB = "ArticlesLocationRelation"
 
+logging.basicConfig(level=logging.WARNING, format='%(levelname)s %(message)s')
+
 ####################################################################################
 ####################################################################################
-logging.warning("    [%s]    Disabling  strict SQL mode", datetime.now())
+logging.warning("   Disabling  strict SQL mode")
 
 query = """SET GLOBAL sql_mode=''"""
 cursor.execute(query)
@@ -32,20 +34,20 @@ cursor.execute(query)
 ####################################################################################
 ####################################################################################
 
-logging.warning("    [%s]    Removing tables: %s, %s, %s",
-                datetime.now() ,ARTS_TB, LOC_TB, ARTS_LOC_REL_TB)
+logging.warning("   Removing tables: %s, %s, %s",
+                ARTS_TB, LOC_TB, ARTS_LOC_REL_TB)
 
 # logging.warning(f"    [{datetime.now()}]    Removing tables: {ARTS_TB}, {LOC_TB}, {ARTS_LOC_TB}")
 
 query = f"""DROP TABLE IF EXISTS {ARTS_TB}, {LOC_TB}, {ARTS_LOC_REL_TB}"""
 cursor.execute(query)
 
-logging.warning("    [%s]    Tables removed!", datetime.now())
+logging.warning("   Tables removed!")
 
 ####################################################################################
 ####################################################################################
 
-logging.warning("    [%s]    Creating table: %s", datetime.now(), ARTS_TB)
+logging.warning("   Creating table: %s", ARTS_TB)
 # Query: Create Articles table
 create_artsTb_query = f"""
 CREATE TABLE IF NOT EXISTS {ARTS_TB} (
@@ -60,7 +62,7 @@ CREATE TABLE IF NOT EXISTS {ARTS_TB} (
                                     )
 """
 cursor.execute(create_artsTb_query)
-logging.warning("    [%s]    **Table created**", datetime.now())
+logging.warning("   **Table created**")
 
 ####################################################################################
 ####################################################################################
@@ -76,7 +78,7 @@ municipalities_list = [unidecode(municipality)
                        for municipality in municipalities_df["municipality"].values]
 municipalities_list.sort()
 
-logging.warning("    [%s]    Creating table: %s", datetime.now(), LOC_TB)
+logging.warning("   Creating table: %s", LOC_TB)
 # Query: Create Location table
 create_locTb_query = f"""
 CREATE TABLE IF NOT EXISTS {LOC_TB} (
@@ -88,18 +90,18 @@ CREATE TABLE IF NOT EXISTS {LOC_TB} (
 """
 cursor.execute(create_locTb_query)
 
-logging.warning("    [%s]    Inserting data into Location table", datetime.now())
+logging.warning("   Inserting data into Location table")
 query = """INSERT INTO Location (Name) VALUES (%(Name)s)"""
 for loc in municipalities_list:
     data = {"Name": loc}
     cursor.execute(query, data)
 
-logging.warning("    [%s]    **Table created**", datetime.now())
+logging.warning("   **Table created**")
 
 ####################################################################################
 ####################################################################################
 
-logging.warning("    [%s]    Creating table: %s", datetime.now(), ARTS_LOC_REL_TB)
+logging.warning("   Creating table: %s", ARTS_LOC_REL_TB)
 # Query: Create Article-Location Bridge table
 create_artslocrelTB_query = f"""
 CREATE TABLE IF NOT EXISTS {ARTS_LOC_REL_TB} (
@@ -114,11 +116,11 @@ CREATE TABLE IF NOT EXISTS {ARTS_LOC_REL_TB} (
                                             )
 """
 cursor.execute(create_artslocrelTB_query)
-logging.warning("    [%s]    **Table created**", datetime.now())
+logging.warning("   **Table created**")
 ####################################################################################
 ####################################################################################
 
-logging.warning("    [%s]    Schema cleaned and ready!", datetime.now())
+logging.warning("   Schema cleaned and ready!")
 
 db.commit()
 db.close()
