@@ -1,9 +1,7 @@
 name: GdCPR
 services:
-
 ################################################################
 ########################## db ##################################
-
   database:
     container_name: database
     build:
@@ -15,35 +13,29 @@ services:
       MYSQL_ROOT_PASSWORD: "root"
     ports:
       - "3306:3306"
-
 ################################################################
-##################### wait-for-db ##############################
-
-  wait-for-db:
-    container_name: wait-for-db
+##################### wait-for-database ########################
+  wait-for-database:
+    container_name: wait-for-database
     image: atkrad/wait4x
     depends_on:
       database:
         condition: service_started
-    command: tcp database:3306 -t 30s -i 250ms
-
+    command: tcp database:3306 -t 180s -i 300ms
 ################################################################
-################## db-scheme-creator ###########################
-
-  db-scheme-creator:
-    container_name: db-scheme-creator
+############# database-scheme-creator ##########################
+  database-scheme-creator:
+    container_name: database-scheme-creator
     build:
       context: ./
-      dockerfile: db-scheme-creator/Dockerfile
+      dockerfile: database-scheme-creator/Dockerfile
     volumes:
       - ../..:/workspaces:cached
     depends_on:
-      wait-for-db:
+      wait-for-database:
         condition: service_completed_successfully
-
 ################################################################
 #################### endi-scrapper #############################
-
   scrapper:
     container_name: scrapper
     build:
@@ -52,12 +44,10 @@ services:
     volumes:
       - ../..:/workspaces:cached
     depends_on:
-      db-scheme-creator:
+      database-scheme-creator:
         condition: service_completed_successfully
-
 ################################################################
 ########################## dev #################################
-
   development:
     container_name: development
     build:
