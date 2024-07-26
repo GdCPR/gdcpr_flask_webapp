@@ -36,11 +36,11 @@ services:
         condition: service_completed_successfully
 ################################################################
 #################### endi-scrapper #############################
-  scrapper:
-    container_name: scrapper
+  endi-scrapper:
+    container_name: endi-scrapper
     build:
       context: ./
-      dockerfile: scrapper/Dockerfile
+      dockerfile: endi-scrapper/Dockerfile
     volumes:
       - ../..:/workspaces:cached
     depends_on:
@@ -58,4 +58,4 @@ services:
     command: sleep infinity
     depends_on:
       - database
-      - scrapper
+      - endi-scrapper
