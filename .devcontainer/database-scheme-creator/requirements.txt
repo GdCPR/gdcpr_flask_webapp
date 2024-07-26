@@ -1,0 +1,3 @@
+datetime
+unidecode
+mysql-connector-python
