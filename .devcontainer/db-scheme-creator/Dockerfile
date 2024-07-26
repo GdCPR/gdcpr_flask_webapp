@@ -1,37 +1,29 @@
 # Select image to use
-FROM python:3.12.4-slim-bullseye
+FROM python:3.12.4-alpine3.20
 
-# Turn off prompt ask user for permissions
-ENV DEBIAN_FRONTEND=noninteractive
+# FROM python:3.12.4-slim-bullseye
 
-# Update Linux
-RUN apt-get -y update --no-install-recommends
-
-# Install build essentials
-RUN apt-get -y install build-essential
-
-# Upgrade Linux
-RUN apt-get -y upgrade
-
-# Remove dependencies no longer used 
-RUN apt-get autoremove -y
-
-# Clears local repo of retrieved package files
-RUN apt-get clean -y
-
-# Turn on prompt ask user for permissions
-ENV DEBIAN_FRONTEND=dialog
+# # Turn off prompt ask user for permissions
+# ENV DEBIAN_FRONTEND=noninteractive
+# # Update Linux, install essentials
+# RUN apt -y update --no-install-recommends && \
+#     # Upgrade Linux
+#     apt -y upgrade --without-new-pkgs && \
+#     # Remove dependencies no longer used 
+#     apt -y autoremove --purge && \
+#     # Clears local repo of retrieved package files
+#     apt -y clean
+# # Turn on prompt ask user for permissions
+# ENV DEBIAN_FRONTEND=dialog
 
 # Copy python requirements file to container
 COPY ./db-scheme-creator/requirements.txt .
 
-# Upgrade pip
-RUN pip install --upgrade pip
+# # Upgrade pip
+# RUN pip install --upgrade pip && \
+#     # Install python requirements
+#     pip install -r requirements.txt --ignore-installed
 
-# Install setupstools
-RUN pip install --upgrade setuptools
-
-# Install python requirements
 RUN pip install -r requirements.txt --ignore-installed
 
 # Copy database manager to container
