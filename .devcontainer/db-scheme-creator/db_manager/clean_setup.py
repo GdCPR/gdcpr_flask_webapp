@@ -13,7 +13,7 @@ import os
 import logging
 from datetime import datetime
 from unidecode import unidecode
-import pandas as pd
+import csv
 from db_connector import dbconnection as db
 
 cursor = db.cursor(buffered=True)
@@ -69,13 +69,11 @@ logging.warning("   **Table created**")
 
 dirname = os.path.dirname(__file__)
 filepath = os.path.join(dirname, "assets/puerto_rico_municipalities.txt")
-municipalities_df = pd.read_csv(filepath,
-                                sep=" ",
-                                header=None,
-                                names=["municipality"])
-# Filter for the first table and unique values from the Pueblos Column
-municipalities_list = [unidecode(municipality)
-                       for municipality in municipalities_df["municipality"].values]
+
+with open(filepath, mode ='r')as file:
+  csvFile = csv.reader(file)
+  municipalities_list = [unidecode(municipality[0]) for municipality in csvFile]
+
 municipalities_list.sort()
 
 logging.warning("   Creating table: %s", LOC_TB)
