@@ -35,12 +35,12 @@ services:
       wait-for-database:
         condition: service_completed_successfully
 ################################################################
-#################### endi-scrapper #############################
-  endi-scrapper:
-    container_name: endi-scrapper
+#################### scrapper #############################
+  scrapper:
+    container_name: scrapper
     build:
       context: ./
-      dockerfile: endi-scrapper/Dockerfile
+      dockerfile: scrapper/Dockerfile
     volumes:
       - ../..:/workspaces:cached
     depends_on:
@@ -58,4 +58,4 @@ services:
     command: sleep infinity
     depends_on:
       - database
-      - endi-scrapper
+      - scrapper
