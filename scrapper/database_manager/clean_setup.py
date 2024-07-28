@@ -26,8 +26,8 @@ ARTS_LOC_REL_TB = "ArticlesLocationRelation"
 ####################################################################################
 logging.warning("    [%s]    Disabling  strict SQL mode", datetime.now())
 
-query = """SET GLOBAL sql_mode=''"""
-cursor.execute(query)
+# query = """SET GLOBAL sql_mode=''"""
+# cursor.execute(query)
 
 ####################################################################################
 ####################################################################################
