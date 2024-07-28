@@ -14,7 +14,7 @@ import logging
 from datetime import datetime
 from unidecode import unidecode
 import csv
-from db_connector import dbconnection as db
+from database_manager.db_connector import dbconnection as db
 
 cursor = db.cursor(buffered=True)
 

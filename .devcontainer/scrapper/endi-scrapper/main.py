@@ -1,10 +1,10 @@
 import time
 import logging
 from datetime import datetime ,timedelta
-from art_hash import get_hash
-from extract_artcls_data import current_artcls, artcl_data, artcl_content
-from location_detector import detect_location, validate_location, get_location_id
-from relevance_score_claculator import calculate_score as score
+from collector.art_hash import get_hash
+from collector.extract_artcls_data import current_artcls, artcl_data, artcl_content
+from collector.location_detector import detect_location, validate_location, get_location_id
+from collector.relevance_score_claculator import calculate_score as score
 from database_manager.database_connector import dbconnection as db
 from database_manager import querys
 

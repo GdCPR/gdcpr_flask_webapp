@@ -1,7 +1,7 @@
 import requests
 import dateparser
 from bs4 import BeautifulSoup, element
-from art_hash import get_hash
+from collector.art_hash import get_hash
 
 ####################################################################
 ####################################################################
