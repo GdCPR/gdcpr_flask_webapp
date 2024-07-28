@@ -2,8 +2,7 @@
 # Update pip
 pip install --upgrade pip
 
-# Change to root dir
-cd .
+cd ./.devcontainer/development
 
 # Install requirements
 yes | pip install -r requirements.txt --ignore-installed
