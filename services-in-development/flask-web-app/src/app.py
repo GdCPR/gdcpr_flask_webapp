@@ -11,10 +11,29 @@ app = Flask(__name__, template_folder=template_dir)
 # Rutas de la aplicación
 @app.route("/")
 def home():
+    db.reconnect()
+    cursor = db.cursor(buffered=True)
 
+    # Fetch Locations
+    cursor.execute("""SELECT Name FROM Location ORDER BY LocationID""")
+    result = cursor.fetchall()
+    locationObj = []
+    columnNames = [column[0] for column in cursor.description]
+    for record in result:
+        locationObj.append(dict(zip(columnNames, record)))
 
-    return render_template("index.html")
-
+    # Fetch Articles
+    cursor.execute("""SELECT * FROM Articles ORDER BY DateTime DESC""")
+    result = cursor.fetchall()
+    # Convertir datos a dict
+    articlesObj = []
+    columnNames = [column[0] for column in cursor.description]
+    for record in result:
+        articlesObj.append(dict(zip(columnNames, record)))
+    cursor.close()
+    return render_template("index.html",
+                           articles=articlesObj,
+                           location=locationObj)
 
 
 if __name__ == "__main__":
