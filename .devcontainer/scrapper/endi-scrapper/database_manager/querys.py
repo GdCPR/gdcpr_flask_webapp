@@ -1,7 +1,7 @@
 INSERT_ARTICLE = """
 INSERT INTO Articles 
 (URL, Headline, Subheadline, Author, DateTime, Hash)
-VALUES (%(url)s, %(headline)s, %(author)s, %(subheadline)s, %(datetime)s, %(hash)s)
+VALUES (%(url)s, %(headline)s, %(subheadline)s, %(author)s, %(datetime)s, %(hash)s)
 """
 
 INSERT_ARTICLE_LOCATION = """
