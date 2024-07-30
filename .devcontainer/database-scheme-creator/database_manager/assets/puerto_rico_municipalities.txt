@@ -1,78 +1,78 @@
-adjuntas
-aguada
-aguadilla
-aguas_buenas
-aibonito
-arecibo
-arroyo
-anasco
-barceloneta
-barranquitas
-bayamon
-cabo_rojo
-caguas
-camuy
-canovanas
-carolina
-catano
-cayey
-ceiba
-ciales
-cidra
-coamo
-comerio
-corozal
-culebra
-dorado
-fajardo
-florida
-guayama
-guayanilla
-guaynabo
-gurabo
-guanica
-hatillo
-hormigueros
-humacao
-isabela
-jayuya
-juana_diaz
-juncos
-lajas
-lares
-las_marias
-las_piedras
-loiza
-luquillo
-manati
-maricao
-maunabo
-mayagüez
-moca
-morovis
-naguabo
-naranjito
-orocovis
-patillas
-penuelas
-ponce
-quebradillas
-rincon
-rio_grande
-sabana_grande
-salinas
-san_german
-san_juan
-san_lorenzo
-san_sebastian
-santa_isabel
-toa_alta
-toa_baja
-trujillo_alto
-utuado
-vega_alta
-vega_baja
-vieques
-villalba
-yabucoa
-yauco
+Adjuntas, adjuntas
+Aguada, aguada
+Aguadilla, aguadilla
+Aguas Buenas, aguas_buenas
+Aibonito, aibonito
+Arecibo, arecibo
+Arroyo, arroyo
+Añasco, anasco
+Barceloneta, barceloneta
+Barranquitas, barranquitas
+Bayamón, bayamon
+Cabo Rojo, cabo_rojo
+Caguas, caguas
+Camuy, camuy
+Canovanas, canovanas
+Carolina, carolina
+Cataño, catano
+Cayey, cayey
+Ceiba, ceiba
+Ciales, ciales
+Cidra, cidra
+Coamo, coamo
+Comerio, comerio
+Corozal, corozal
+Culebra, culebra
+Dorado, dorado
+Fajardo, fajardo
+Florida, florida
+Guayama, guayama
+Guayanilla, guayanilla
+Guaynabo, guaynabo
+Gurabo, gurabo
+Guanica, guanica
+Hatillo, hatillo
+Hormigueros, hormigueros
+Humacao, humacao
+Isabela, isabela
+Jayuya, jayuya
+Juana Díaz, juana_diaz
+Juncos, juncos
+Lajas, lajas
+Lares, lares
+Las Marías, las_marias
+Las Piedras, las_piedras
+Loíza, loiza
+Luquillo, luquillo
+Manatí, manati
+Maricao, maricao
+Maunabo, maunabo
+Mayagüez, mayagüez
+Moca, moca
+Morovis, morovis
+Naguabo, naguabo
+Naranjito, naranjito
+Orocovis, orocovis
+Patillas, patillas
+Penuelas, penuelas
+Ponce, ponce
+Quebradillas, quebradillas
+Rincón,rincon
+Río Grande, rio_grande
+Sabana Grande, sabana_grande
+Salinas, salinas
+San Germán, san_german
+San Juan, san_juan
+San Lorenzo, san_lorenzo
+San Sebastián, san_sebastian
+Santa Isabel, santa_isabel
+Toa Alta, toa_alta
+Toa Baja, toa_baja
+Trujillo Alto, trujillo_alto
+Utuado, utuado
+Vega Alta, vega_alta
+Vega Baja, vega_baja
+Vieques, vieques
+Villalba, villalba
+Yabucoa, yabucoa
+Yauco, yauco

@@ -14,7 +14,7 @@ import logging
 from datetime import datetime
 from unidecode import unidecode
 import csv
-from database_manager.db_connector import dbconnection as db
+from db_connector import dbconnection as db
 
 cursor = db.cursor(buffered=True)
 
@@ -26,15 +26,15 @@ logging.basicConfig(level=logging.WARNING, format='%(levelname)s %(message)s')
 
 ####################################################################################
 ####################################################################################
-logging.warning("   Disabling  strict SQL mode")
+# logging.warning("   Disabling  strict SQL mode")
 
-query = """SET GLOBAL sql_mode=''"""
-cursor.execute(query)
+# query = """SET GLOBAL sql_mode=''"""
+# cursor.execute(query)
 
 ####################################################################################
 ####################################################################################
 cursor.execute("""SHOW TABLES LIKE 'Articles'""") # Check if articles table exists
-if len([row[0] for row in cursor]) == 0: # articles table no exists, create schema
+if len([row[0] for row in cursor]) != 0: # articles table no exists, create schema
    
   logging.warning("   Removing tables: %s, %s, %s",
                   ARTS_TB, LOC_TB, ARTS_LOC_REL_TB)
@@ -57,9 +57,9 @@ if len([row[0] for row in cursor]) == 0: # articles table no exists, create sche
                                       URL VARCHAR(1024) NOT NULL, 
                                       Headline VARCHAR(1024) NOT NULL,
                                       Subheadline VARCHAR(1024) NOT NULL,
-                                      Author VARCHAR(1024) NOT NULL,
+                                      Author VARCHAR(255) NOT NULL,
                                       DateTime DATETIME,
-                                      Hash VARCHAR(1024) NOT NULL,
+                                      Hash VARCHAR(512) NOT NULL,
                                       PRIMARY KEY (ArticleID)
                                       )
   """
@@ -74,16 +74,19 @@ if len([row[0] for row in cursor]) == 0: # articles table no exists, create sche
 
   with open(filepath, mode ='r')as file:
     csvFile = csv.reader(file)
-    municipalities_list = [unidecode(municipality[0]) for municipality in csvFile]
+    # name = [municipality[0] for municipality in csvFile]
+    locations = [[municipality[0], unidecode(municipality[1])] for municipality in csvFile]
 
-  municipalities_list.sort()
+  # name.sort()
+  locations.sort()
 
   logging.warning("   Creating table: %s", LOC_TB)
   # Query: Create Location table
   create_locTb_query = f"""
   CREATE TABLE IF NOT EXISTS {LOC_TB} (
                                       LocationID INTEGER AUTO_INCREMENT,
-                                      Name VARCHAR(1024),
+                                      Name VARCHAR(255),
+                                      NormalizedName VARCHAR(255),
                                       RelevanceScore DOUBLE DEFAULT 0,
                                       PRIMARY KEY (LocationID)
                                       )
@@ -91,9 +94,10 @@ if len([row[0] for row in cursor]) == 0: # articles table no exists, create sche
   cursor.execute(create_locTb_query)
 
   logging.warning("   Inserting data into Location table")
-  query = """INSERT INTO Location (Name) VALUES (%(Name)s)"""
-  for loc in municipalities_list:
-      data = {"Name": loc}
+  query = """INSERT INTO Location (Name, NormalizedName) VALUES (%(Name)s, %(NormalizedName)s)"""
+  for loc in locations:
+      print(loc)
+      data = {"Name": loc[0], "NormalizedName": loc[1]}
       cursor.execute(query, data)
 
   logging.warning("   **Table created**")
