@@ -50,8 +50,6 @@ def validate_location(location: list) -> set:
 
     # Create a list from row Name fields
     locs_official = [row[0] for row in locs_fetch] # type: ignore
-    print(locs_official)
-    print(location)
 
     locs_validated = set(location) & set(locs_official)
 
@@ -65,7 +63,7 @@ def get_location_id(validated_location: str) -> int: # type: ignore
     cursor = db.cursor()
 
    # Retrieve locations from database
-    query = """SELECT NormalizedName FROM Location"""
+    query = """SELECT * FROM Location"""
     cursor.execute(query)
 
     # Fetch all rows
@@ -73,5 +71,5 @@ def get_location_id(validated_location: str) -> int: # type: ignore
     
     # Retrieve location id from database
     for row in locs_fetch:
-        if validated_location == row[0]:
+        if validated_location == row[2]:
                 return row[0]
