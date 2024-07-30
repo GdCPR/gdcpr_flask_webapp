@@ -42,7 +42,7 @@ def validate_location(location: list) -> set:
     cursor = db.cursor()
 
     # Retrieve locations from database
-    query = """SELECT * FROM Location"""
+    query = """SELECT NormalizedName FROM Location"""
     cursor.execute(query)
 
     # Fetch all rows
