@@ -49,13 +49,15 @@ def validate_location(location: list) -> set:
     locs_fetch = cursor.fetchall()
 
     # Create a list from row Name fields
-    locs_official = [row[1] for row in locs_fetch]
+    locs_official = [row[0] for row in locs_fetch] # type: ignore
+    print(locs_official)
+    print(location)
 
     locs_validated = set(location) & set(locs_official)
 
     return locs_validated
 
-def get_location_id(validated_location: str) -> int:
+def get_location_id(validated_location: str) -> int: # type: ignore
     """
     """
     # Create database cursor object
@@ -71,5 +73,5 @@ def get_location_id(validated_location: str) -> int:
     
     # Retrieve location id from database
     for row in locs_fetch:
-        if validated_location == row[1]:
+        if validated_location == row[0]:
                 return row[0]

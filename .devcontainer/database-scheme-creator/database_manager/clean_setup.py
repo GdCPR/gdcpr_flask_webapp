@@ -35,7 +35,7 @@ logging.basicConfig(level=logging.WARNING, format='%(levelname)s %(message)s')
 ####################################################################################
 cursor.execute("""SHOW TABLES LIKE 'Articles'""") # Check if articles table exists
 if len([row[0] for row in cursor]) == 0: # articles table no exists, create schema
-   
+  db.reconnect()
   logging.warning("   Removing tables: %s, %s, %s",
                   ARTS_TB, LOC_TB, ARTS_LOC_REL_TB)
 
@@ -75,7 +75,7 @@ if len([row[0] for row in cursor]) == 0: # articles table no exists, create sche
   with open(filepath, mode ='r')as file:
     csvFile = csv.reader(file)
     # name = [municipality[0] for municipality in csvFile]
-    locations = [[municipality[0], unidecode(municipality[1])] for municipality in csvFile]
+    locations = [[municipality[0].strip(), unidecode(municipality[1]).strip()] for municipality in csvFile]
 
   # name.sort()
   locations.sort()
@@ -96,7 +96,6 @@ if len([row[0] for row in cursor]) == 0: # articles table no exists, create sche
   logging.warning("   Inserting data into Location table")
   query = """INSERT INTO Location (Name, NormalizedName) VALUES (%(Name)s, %(NormalizedName)s)"""
   for loc in locations:
-      print(loc)
       data = {"Name": loc[0], "NormalizedName": loc[1]}
       cursor.execute(query, data)
 
