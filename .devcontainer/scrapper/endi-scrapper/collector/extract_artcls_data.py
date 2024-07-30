@@ -57,7 +57,7 @@ def artcl_data(article: element.Tag) -> dict: # type: ignore
     # Create an iterator to separate headline from subheadline
     html_attrs_dict = {'class':'standard-teaser-headline teaser-headline'}
     headline_iterator = article.find(name='h3',
-                                        attrs=html_attrs_dict).stripped_strings # type: ignore
+                                     attrs=html_attrs_dict).stripped_strings # type: ignore
     # Fetch the first item only which corresponds to the headline
     article_headline = next(headline_iterator)
 
