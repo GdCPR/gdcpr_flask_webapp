@@ -71,6 +71,7 @@ def artcl_data(article: element.Tag) -> dict: # type: ignore
     html_attrs_dict = {"class": "authors-byline-text"}
     article_author = article.find(name="div",
                                     attrs=html_attrs_dict).text.strip() # type: ignore
+    article_author = article_author[4:] # remove "Por " portion from the string
 
     # Return dictionary with data
     return {"url": article_url,
