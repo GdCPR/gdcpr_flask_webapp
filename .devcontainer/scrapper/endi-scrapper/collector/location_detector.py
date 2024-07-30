@@ -63,7 +63,7 @@ def get_location_id(validated_location: str) -> int:
     cursor = db.cursor()
 
    # Retrieve locations from database
-    query = """SELECT * FROM Location"""
+    query = """SELECT NormalizedName FROM Location"""
     cursor.execute(query)
 
     # Fetch all rows
