@@ -3,6 +3,9 @@ from bs4 import element
 
 def get_hash(article: element.Tag) -> str:
     """
+    Maps article tag objecto to fixed-size value
+
+    
     """
     # Create a hash object
     hash_object = hashlib.sha256(article.encode('utf-8'))

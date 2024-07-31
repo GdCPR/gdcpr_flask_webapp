@@ -22,13 +22,13 @@ def detect_location(article_data: dict) -> list:
 
     # Store the pueblos found from the article content
     loc_found_body = [ent.text.lower().replace(" ", "_")
-                                 for ent in body_doc.ents if ent.label_== "LOC"]
+                                for ent in body_doc.ents if ent.label_== "LOC"]
 
     loc_found_headline_sub = [ent.text.lower().replace(" ", "_")
-                                         for ent in headline_sub_doc.ents if ent.label_== "LOC"]
+                                        for ent in headline_sub_doc.ents if ent.label_== "LOC"]
 
     loc_found_headline = [ent.text.lower().replace(" ", "_")
-                                     for ent in headline_doc.ents if ent.label_== "LOC"]
+                                    for ent in headline_doc.ents if ent.label_== "LOC"]
     
     loc_found = list(set(loc_found_body + loc_found_headline_sub + loc_found_headline))
 
