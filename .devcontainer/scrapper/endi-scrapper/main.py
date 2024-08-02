@@ -1,7 +1,7 @@
 import time
 import logging
 from datetime import datetime ,timedelta
-from collector.art_hash import get_hash
+from collector.article_hash import get_hash
 from collector.extract_artcls_data import current_artcls, artcl_data, artcl_content
 from collector.location_detector import detect_location, validate_location, get_location_id
 from collector.relevance_score_claculator import calculate_score as score
