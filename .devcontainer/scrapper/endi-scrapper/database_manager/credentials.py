@@ -9,7 +9,7 @@ container_db_credentials = {
 clever_cloud_db_credentials = {
     "host": "bgesxkvwlvoosa77qabc-mysql.services.clever-cloud.com",
     "user": "umgkpvfdmjnu9ymt",
-    "password": "Sbu0MH9YqrdXfNjvqhZg",
+    "password": "2SyIIOwQBiJ5frZzYSjY",
     "database": "bgesxkvwlvoosa77qabc",
     "port": 3306
 }
