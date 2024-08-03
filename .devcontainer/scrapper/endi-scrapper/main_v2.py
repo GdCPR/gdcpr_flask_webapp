@@ -4,6 +4,6 @@ articles = current_articles()
 
 for article in articles:
 
-    article = Article(article= article)
+    article = Article(article_tag= article)
 
-    print(article._author())
+    print(article._content())

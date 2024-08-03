@@ -93,6 +93,7 @@ def artcl_content(article_data: dict) -> dict:
 
     article_soup = BeautifulSoup(article_html.text,
                                 "html.parser")
+    
     html_attrs_dict = {"class": "article-headline__subheadline"}
     headline_sub = article_soup.find(name="div",
                                      attrs=html_attrs_dict).text.strip() # type: ignore

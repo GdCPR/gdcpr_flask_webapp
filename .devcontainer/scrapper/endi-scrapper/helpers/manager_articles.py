@@ -1,3 +1,4 @@
+from urllib import response
 import bs4
 import requests
 import hashlib
@@ -34,14 +35,15 @@ class Article:
     :param article: Parse tree HTML tag with its attributes and contents
     :type article: bs4.elemet.Tag
     """
-    def __init__(self, article: bs4.element.Tag) -> None:
+    def __init__(self, article_tag: bs4.element.Tag) -> None:
         """
         Model constructor
 
-        :param article: Parse tree HTML tag with its attributes and contents
+        :param article_tag: Parse tree HTML tag with its attributes and contents
         :type article: bs4.elemet.Tag
         """
-        self.article = article
+        self.article = article_tag
+        self.article_soup = None
 
     def get_hash(self) -> dict:
         """
@@ -53,23 +55,23 @@ class Article:
         # Create hash object
         hash_object = hashlib.sha256(self.article.encode('utf-8'))
         # Get the hexadecimal representation of hash object
-        self.hash_hex_digest = hash_object.hexdigest()
-
-        return {"hash": self.hash_hex_digest}
+        self.hash = hash_object.hexdigest()
+        return {"hash": self.hash}
+    
     def _url(self):
         """Extract article path"""
         article_path = self.article.find(**constants_articles.url_element)
         article_path = article_path["href"]# type: ignore
         # Create article full url
-        self.article_url = f"{constants_articles.BASE_URL}{article_path}"
+        self.url = f"{constants_articles.BASE_URL}{article_path}"
 
     def _headline(self):
         """Extract article headline"""
         # Create an iterator to separate headline from subheadline
-        headlines = self.article.find(**constants_articles.headline_element)
-        headlines_iterator = headlines.stripped_strings # type: ignore
+        hls = self.article.find(**constants_articles.headline_element)
+        hls_iterator = hls.stripped_strings # type: ignore
         # Fetch the first item only which corresponds to the headline
-        self.article_hl = next(headlines_iterator)
+        self.headline = next(hls_iterator)
     
     def _author(self):    
         """Extract article author"""
@@ -78,8 +80,79 @@ class Article:
         author = author.text.strip() # type: ignore
         self.author = author[4:] # remove "Por " portion from the string
 
-    def _article_soup(self):
-        pass
 
     def _subheadline(self):
-        pass
+        """Extract article subheadline"""
+        if self.article_soup is None:
+            sess = requests.session()
+            self._url()
+            response = sess.get(self.url)
+            self.article_soup = BeautifulSoup(response.text,
+                                         "html.parser")
+            shl = self.article_soup.find(**constants_articles.subheadline_element)
+            shl = shl.text # type: ignore
+            shl = shl.strip()
+            self.subheadline = shl
+        else:
+            shl = self.article_soup.find(**constants_articles.subheadline_element)
+            shl = shl.text # type: ignore
+            shl = shl.strip()
+            self.subheadline = shl
+        
+    def _datetime(self):
+        """Extract date and time"""
+        if self.article_soup is None:
+            sess = requests.session()
+            self._url()
+            response = sess.get(self.url)
+            self.article_soup = BeautifulSoup(response.text,
+                                              "html.parser")
+            # Find the elemet and ceate an iterator to separate
+            # element strings between creation datetime and update datetime
+            dt = list(self.article_soup.find(**constants_articles.datetime_element).stripped_strings)[0].split("-")
+            # Select creation date by converting iterator into a list
+            # and selecting the list first item.
+            # Split the string into date and time
+            # Select article date and remove trailing white spaces
+            article_date = dt[0].strip()
+            # Select article date and remove trailing white spaces
+            article_time = dt[1].strip()
+            # Parse date and time variables with dateparser
+            datetime_string = f"{article_date} {article_time}"
+            self.datetime = dateparser.parse((datetime_string))
+        else:
+            # Find the elemet and create an iterator to separate 
+            # element strings between creation datetime and update datetime
+            dt = list(self.article_soup.find(**constants_articles.datetime_element).stripped_strings)[0].split("-")
+            # Select creation date by converting iterator into a list
+            # and selecting the list first item.
+            # Split the string into date and time
+            # Select article date and remove trailing white spaces
+            article_date = dt[0].strip()
+            # Select article date and remove trailing white spaces
+            article_time = dt[1].strip()
+            # Parse date and time variables with dateparser
+            datetime_string = f"{article_date} {article_time}"
+            self.datetime = dateparser.parse((datetime_string))
+    def _content(self):
+        if self.article_soup is None:
+            sess = requests.session()
+            self._url()
+            response = sess.get(self.url)
+            self.article_soup = BeautifulSoup(response.text,
+                                              "html.parser")
+            content_tag = self.article_soup.find_all(**constants_articles.content_element)
+
+            content= []
+            for __ in content_tag:
+                content.append(__.text)
+            self.content = " ".join(content)
+            return self.content
+        else:
+            content_tag = self.article_soup.find_all(**constants_articles.content_element)
+
+            content= []
+            for __ in content_tag:
+                content.append(__.text)
+            self.content = " ".join(content)
+            return self.content 
