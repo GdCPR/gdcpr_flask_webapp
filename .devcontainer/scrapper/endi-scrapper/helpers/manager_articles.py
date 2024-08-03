@@ -1,12 +1,14 @@
-from urllib import response
-import bs4
+"""
+Module that acts as an article manager
+"""
 import requests
 import hashlib
 import dateparser
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, ResultSet, element
 from helpers import constants_articles
 
-def current_articles(url = constants_articles.URL) -> bs4.ResultSet:
+
+def current_articles(url = constants_articles.URL) -> ResultSet:
     """
     Extract current articles from url.
 
@@ -35,14 +37,14 @@ class Article:
     :param article: Parse tree HTML tag with its attributes and contents
     :type article: bs4.elemet.Tag
     """
-    def __init__(self, article_tag: bs4.element.Tag) -> None:
+    def __init__(self, tag: element.Tag) -> None:
         """
         Model constructor
 
         :param article_tag: Parse tree HTML tag with its attributes and contents
         :type article: bs4.elemet.Tag
         """
-        self.article = article_tag
+        self.article = tag
         self.article_soup = None
 
     def get_hash(self) -> dict:
@@ -59,7 +61,7 @@ class Article:
         return {"hash": self.hash}
     
     def _url(self):
-        """Extract article path"""
+        """Extract article url"""
         article_path = self.article.find(**constants_articles.url_element)
         article_path = article_path["href"]# type: ignore
         # Create article full url
@@ -75,11 +77,9 @@ class Article:
     
     def _author(self):    
         """Extract article author"""
-        html_attrs_dict = {"class": "authors-byline-text"}
         author = self.article.find(**constants_articles.author_element)
         author = author.text.strip() # type: ignore
         self.author = author[4:] # remove "Por " portion from the string
-
 
     def _subheadline(self):
         """Extract article subheadline"""
@@ -100,7 +100,7 @@ class Article:
             self.subheadline = shl
         
     def _datetime(self):
-        """Extract date and time"""
+        """Extract article date and time"""
         if self.article_soup is None:
             sess = requests.session()
             self._url()
@@ -118,8 +118,9 @@ class Article:
             # Select article date and remove trailing white spaces
             article_time = dt[1].strip()
             # Parse date and time variables with dateparser
-            datetime_string = f"{article_date} {article_time}"
-            self.datetime = dateparser.parse((datetime_string))
+            string = f"{article_date} {article_time}"
+            self.datetime = dateparser.parse((string))
+            self.datetime = self.datetime.strftime('%Y-%m-%d %H:%M:%S') # type: ignore
         else:
             # Find the elemet and create an iterator to separate 
             # element strings between creation datetime and update datetime
@@ -134,7 +135,10 @@ class Article:
             # Parse date and time variables with dateparser
             datetime_string = f"{article_date} {article_time}"
             self.datetime = dateparser.parse((datetime_string))
+            self.datetime = self.datetime.strftime('%Y-%m-%d %H:%M:%S') # type: ignore
+
     def _content(self):
+        """Extract article body content"""
         if self.article_soup is None:
             sess = requests.session()
             self._url()
@@ -147,7 +151,6 @@ class Article:
             for __ in content_tag:
                 content.append(__.text)
             self.content = " ".join(content)
-            return self.content
         else:
             content_tag = self.article_soup.find_all(**constants_articles.content_element)
 
@@ -155,4 +158,21 @@ class Article:
             for __ in content_tag:
                 content.append(__.text)
             self.content = " ".join(content)
-            return self.content 
+    
+    def construct_data_dict(self):
+        
+        self.get_hash()
+        self._url()
+        self._headline()
+        self._author()
+        self._subheadline()
+        self._datetime()
+        self._content()
+
+        return {"hash": self.hash,
+                "url": self.url,
+                "headline": self.headline,
+                "author": self.author,
+                "subheadline": self.subheadline,
+                "datetime": self.datetime,
+                "content": self.content}

@@ -1,9 +1,15 @@
 from helpers.manager_articles import current_articles, Article
+from helpers.manager_db import DBConsultor
 
-articles = current_articles()
+articles_result_set = current_articles()
+dbconsultor = DBConsultor()
 
-for article in articles:
+for article_tag in articles_result_set:
 
-    article = Article(article_tag= article)
+    article = Article(tag = article_tag)
 
-    print(article._content())
+    if dbconsultor.check_hash(article.get_hash()):
+        article_data_dict = article.construct_data_dict()
+        print("Article Exists")
+    else:
+        print("Don't Exists")
