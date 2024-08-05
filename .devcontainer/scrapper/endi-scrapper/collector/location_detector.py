@@ -6,9 +6,7 @@ from database_manager.database_connector import dbconnection as db
 npl= spacy.load("es_core_news_sm")
 
 def detect_location(article_data: dict) -> list:
-    """
-    Detect location from article headline, subheadline, and content.
-    """    
+  
 
     # Get article content
     body_text = unidecode(article_data["content"])

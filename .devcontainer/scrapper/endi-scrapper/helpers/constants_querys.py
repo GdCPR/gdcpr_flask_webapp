@@ -4,7 +4,7 @@ INSERT INTO Articles
 VALUES (%(url)s, %(headline)s, %(subheadline)s, %(author)s, %(datetime)s, %(hash)s)
 """
 
-INSERT_ARTICLE_LOCATION = """
+INSERT_ARTICLE_LOCATION_RELATION = """
 INSERT INTO ArticlesLocationRelation
 (ArticleID, LocationID)
 VALUES (%(articleid)s, %(locationid)s)
@@ -19,6 +19,21 @@ WHERE LocationID = %(locationid)s;
 FETCH_HASHES = """
 SELECT Hash 
 FROM Articles
+"""
+
+FETCH_NORMALIZED_NAME = """
+SELECT NormalizedName FROM Location
+"""
+
+FETCH_NORMALIZED_NAME_ID = """
+SELECT LocationID, NormalizedName
+FROM Location
+WHERE NormalizedName = %(validated_location)s
+"""
+
+FETCH_LOCATION_ID = """
+SELECT LocationID
+FROM Location
 """
 
 COUNT = """

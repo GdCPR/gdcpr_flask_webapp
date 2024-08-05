@@ -34,7 +34,7 @@ logging.basicConfig(level=logging.WARNING, format='%(levelname)s %(message)s')
 ####################################################################################
 ####################################################################################
 cursor.execute("""SHOW TABLES LIKE 'Articles'""") # Check if articles table exists
-if len([row[0] for row in cursor]) == 0: # articles table no exists, create schema
+if len([row[0] for row in cursor]) != 0: # articles table no exists, create schema
   db.reconnect()
   logging.warning("   Removing tables: %s, %s, %s",
                   ARTS_TB, LOC_TB, ARTS_LOC_REL_TB)
