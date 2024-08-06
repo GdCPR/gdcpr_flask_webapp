@@ -4,7 +4,9 @@ import mysql.connector.abstracts
 from helpers import constants_querys as query
 from helpers.constants_db import clever_cloud_db_credentials as credentials
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
+logging.basicConfig(level=logging.INFO,
+                    format='%(levelname)s :: %(module)s -> %(message)s')
+logger = logging.getLogger(__name__)
 
 class DBManager:
 
@@ -17,7 +19,7 @@ class DBManager:
 
     def __init__(self) -> None:
 
-        logging.info("Initializing DBManager")
+        logger.info("Initializing DBManager")
         self.dbconnection = mysql.connector.connect(**credentials)
         self.cursor = self.dbconnection.cursor(buffered=True)
 
