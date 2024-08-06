@@ -1,46 +1,12 @@
 name: GdCPR
 services:
-  # ################################################################
-  # ########################## db ##################################
-  # database:
-  #   container_name: database
-  #   build:
-  #     context: ./
-  #     dockerfile: database/Dockerfile
-  #   restart: unless-stopped
-  #   environment:
-  #     MYSQL_DATABASE: "db"
-  #     MYSQL_ROOT_PASSWORD: "root"
-  #   ports:
-  #     - "3306:3306"
-  # ################################################################
-  # ##################### wait-for-database ########################
-  # wait-for-database:
-  #   container_name: wait-for-database
-  #   image: atkrad/wait4x
-  #   depends_on:
-  #     database:
-  #       condition: service_started
-  #   command: tcp database:3306 -t 180s -i 300ms
-  # ################################################################
-  # ############# database-scheme-creator ##########################
-  # database-scheme-creator:
-  #   container_name: database-scheme-creator
-  #   build:
-  #     context: ./
-  #     dockerfile: database-scheme-creator/Dockerfile
-  #   volumes:
-  #     - ../..:/workspaces:cached
-  #   depends_on:
-  #     wait-for-database:
-  #       condition: service_completed_successfully
   ################################################################
-  #################### scrapper #############################
-  scrapper:
-    container_name: scrapper
+  #################### endi-scrapper #############################
+  endi-scrapper:
+    container_name: endi-scrapper
     build:
       context: ./
-      dockerfile: scrapper/Dockerfile
+      dockerfile: scrapper/endi-scrapper/Dockerfile
     volumes:
       - ../..:/workspaces:cached
   ################################################################
@@ -54,4 +20,4 @@ services:
       - ../..:/workspaces:cached
     command: sleep infinity
     depends_on:
-      - scrapper
+      - endi-scrapper
