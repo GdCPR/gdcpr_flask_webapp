@@ -8,9 +8,11 @@ attrs
 Babel
 beautifulsoup4
 bleach
+blinker
 certifi
 cffi
 charset-normalizer
+click
 colorama
 comm
 debugpy
@@ -18,6 +20,7 @@ decorator
 defusedxml
 executing
 fastjsonschema
+Flask
 fqdn
 gitdb
 GitPython
@@ -28,6 +31,7 @@ idna
 ipykernel
 ipython
 isoduration
+itsdangerous
 jedi
 Jinja2
 json5
@@ -94,3 +98,4 @@ wcwidth
 webcolors
 webencodings
 websocket-client
+Werkzeug
