@@ -52,6 +52,7 @@ jupyterlab_server
 MarkupSafe
 matplotlib-inline
 mistune
+mysql-connector-python
 nbclient
 nbconvert
 nbdime
