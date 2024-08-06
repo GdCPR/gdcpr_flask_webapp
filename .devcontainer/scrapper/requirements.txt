@@ -4,3 +4,4 @@ unidecode
 mysql-connector-python
 beautifulsoup4
 spacy
+enlighten

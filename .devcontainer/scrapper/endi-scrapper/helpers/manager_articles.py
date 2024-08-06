@@ -57,7 +57,7 @@ class Article:
     
     def __init__(self, tag: element.Tag) -> None:
         """
-        Model constructor
+        Object initialization
 
         :param article_tag: Parse tree HTML tag with its attributes and 
         contents
@@ -238,7 +238,7 @@ class Article:
 
     def construct_data_dict(self) -> dict:
         """
-        Executes private functions to construct a dictionary with
+        Executes private methods to construct a dictionary with
         the data
 
         :return: Article data
