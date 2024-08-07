@@ -2,7 +2,7 @@ import logging
 import enlighten
 import mysql.connector
 import mysql.connector.abstracts 
-from helpers import constants_querys as query
+# from helpers import constants_querys as query
 from helpers.constants_db import clever_cloud_db_credentials as credentials
 
 logging.basicConfig(level=logging.INFO,

@@ -1,12 +1,14 @@
 import os
 from flask import Flask, render_template
-from database_manager.database_connector import dbconnection as db
+from helpers.manager_db import DBManager
 
 app_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 template_dir = os.path.join(app_dir, "src", "templates")
 
 app = Flask(__name__, template_folder=template_dir)
 
+dbmanager = DBManager()
+db = dbmanager.dbconnection
 
 # Rutas de la aplicación
 @app.route("/")

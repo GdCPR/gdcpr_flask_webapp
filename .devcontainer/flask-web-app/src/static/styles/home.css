@@ -1,0 +1,43 @@
+body {
+    max-width: 900px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    height: 0 auto;
+    background-color: #ffffff00;
+  }
+
+div.tablecontainer {
+    max-width: fit-content;
+    max-height: fit-content;
+    border: 5;
+    box-shadow: 3px 3px 5px;
+    padding: 2rem;
+}
+
+table.articlestb{
+    margin-top: 2;
+    margin-bottom: 2;
+}
+
+td {
+    white-space: pre-line;
+}
+
+a.headline {
+    color: rgb(68, 1, 84);
+}
+
+span.author {
+    color: rgb(59, 82, 139);
+}
+
+span.subheadline{
+    color: rgb(33, 145, 140);
+    font-style: italic;
+}
+
+td.datetime{
+    color: rgb(94, 201, 98);
+}
