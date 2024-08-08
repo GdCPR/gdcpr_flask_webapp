@@ -24,7 +24,7 @@
                 </button>
                 <ul class="dropdown-menu" style="overflow-y:auto; max-height:50vh" aria-labelledby="dropdownMenuButton">
                     {% for l in location %}
-                        <li><a class="dropdown-item" href={{l.Name}}> {{l.Name}} </a></li>
+                        <li><a class="dropdown-item" href=/municipio/{{l.NormalizedName}}> {{l.Name}} </a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -46,7 +46,7 @@
                             <span class = "author"> {{d.Author}} </span>
                             <span class="subheadline"> {{d.Subheadline}} </span>
                         </td>
-                        <td class="datetime">{{d.DateTime}}</td>
+                        <td class="datetime"> {{d.DateTime}} </td>
                     </tr>
                 {% endfor %}
             </tbody>

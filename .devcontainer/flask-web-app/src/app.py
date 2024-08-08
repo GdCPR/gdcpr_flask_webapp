@@ -1,6 +1,7 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for
 from helpers.manager_db import DBManager
+import logging
 
 app_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 template_dir = os.path.join(app_dir, "src", "templates")
@@ -11,13 +12,13 @@ dbmanager = DBManager()
 db = dbmanager.dbconnection
 
 # Rutas de la aplicación
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
     db.reconnect()
     cursor = db.cursor(buffered=True)
 
     # Fetch Locations
-    cursor.execute("""SELECT Name FROM Location ORDER BY LocationID""")
+    cursor.execute("""SELECT NormalizedName, Name FROM Location ORDER BY LocationID""")
     result = cursor.fetchall()
     locationObj = []
     columnNames = [column[0] for column in cursor.description]
@@ -37,6 +38,9 @@ def home():
                            articles=articlesObj,
                            location=locationObj)
 
+@app.route("/municipio/<municipio>" , methods=['GET', 'POST'])
+def filter(municipio):
+    return (municipio)
 
 if __name__ == "__main__":
     app.run(debug=True, port=4327)
