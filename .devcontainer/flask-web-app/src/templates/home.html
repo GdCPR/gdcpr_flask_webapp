@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GdCPR</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="wrapper-left">
+            <div class="title">
+                Municipios
+            </div>
+            <ul>
+                {% for loc in location %}
+                <li data-li="{{loc.NormalizedName}}"> 
+                    <p>{{loc.Name}}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="wrapper-right">
+            <div class="title">
+                Artículos
+            </div>
+            <div class="table_container">
+                <div class="table_head">
+                    <thead>
+                        <th scope="col">
+                            Titular
+                        </th>
+                        <th scope="col">
+                            Fecha/Hora
+                        </th>
+                    </thead>
+                </div>
+                <div class="table_body">
+                    {% for article in articles %}
+                    <tr>
+                        <td>
+                            <p class="article_headline">
+                                <a href="{{article.URL}}">
+                                    {{article.headline}}
+                                </a>
+                            </p>
+                            <p class="article_author">
+                                {{article.Author}}
+                            </p>
+                            <p class="article_subheadline">
+                                {{article.Subheadline}}
+                            </p>
+                        </td>
+                        <td>
+                            <p class="article_datetime">
+                                {{article.DateTime}}
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

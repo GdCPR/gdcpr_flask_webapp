@@ -1,7 +1,7 @@
 import os
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 from helpers.manager_db import DBManager
-import logging
+# import logging
 
 app_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 template_dir = os.path.join(app_dir, "src", "templates")
@@ -34,13 +34,14 @@ def home():
     for record in result:
         articlesObj.append(dict(zip(columnNames, record)))
     cursor.close()
-    return render_template("index.html",
+    return render_template("home.html",
                            articles=articlesObj,
                            location=locationObj)
 
-@app.route("/municipio/<municipio>" , methods=['GET', 'POST'])
-def filter(municipio):
-    return (municipio)
+@app.route("/location/<string:loc>" , methods=['GET', 'POST'])
+def filter(loc):
+
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(debug=True, port=4327)
