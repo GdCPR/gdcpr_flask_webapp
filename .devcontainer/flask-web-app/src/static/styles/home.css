@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-*{
+* {
+    /* outline: 1px solid red; */
+    max-width: 100%;
+    max-height: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,46 +11,60 @@
     font-family: "Montserrat", sans-serif;
 }
 
-body{
-    background: #e0e3dc;
+body {
+    background: #f8f5f1;
     font-size: 100%;
     line-height: 24px;
 }
 
-.wrapper{
+.wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #c8cdd6;
-    width: 1100px;
-    height: 500px;
+    background: #f8f5f1;
+    width: 90%;
+    height: 90%;
     display: flex;
     border-radius: 15px;
 }
 
-.wrapper .wrapper-left{
-    width: 300px;
-    background: #c0c7d3;
-    padding: 0 25px;
+.wrapper .wrapper-left {
+    width: 40%;
+    background: #f8f5f1;
+    padding: 10px 25px;
+    display: flex;
     align-items: center;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     box-shadow: 10px 0 13px 0px rgba(41, 41, 57, 0.7);
 }
 
-.wrapper .wrapper-left .wrapper-left-heading{
-    color: #000000;
-    padding: 10px 5px;
+.wrapper .wrapper-left .title {
+    position: relative;
+    bottom: 45%;
+    font-size: 32px;
     text-align: center;
-    font-size: 1.5em;
-    font-weight: 600;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-weight: 700;
+    width: 100%;
+    background-color: #d67459;
+    border-width: 1px;
+    border-color: #d67459;
+    border-style: solid;
+    border-radius: 3px;
+    padding: 10px 15px;
 }
 
-.wrapper .wrapper-left ul{
-    height: 450px;
-    text-align: left;
-    overflow: hidden;
+.wrapper .wrapper-left ul {
+    position: absolute;
+    top: 12%;
+    right: 65%;
+    width: 30%;
+    height: 85%;
+    padding: 10px 10px;
+    border-radius: 3px;
     overflow-y: scroll;
     -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
     scrollbar-width: none;  /* Hide scrollbar for Firefox */
@@ -59,27 +76,27 @@ body{
 }
 
 .wrapper .wrapper-left ul li{
-    background: #696e6e;
+    background: #ece5d3;
     margin-bottom: 5px;
     border-radius: 3px;
-    padding: 10px 5px;
-    text-transform: uppercase;
+    padding: 10px 15px;
     font-weight: 500;
     position: relative;
-    width: 200px;
-    letter-spacing: 2px;
-    transition: all 0.4s ease;
-    cursor: pointer;
+    left: 0%;
     overflow: hidden;
+    width: 300px;
+    letter-spacing: 2px;
+    transition: all 400ms ease;
+    cursor: pointer;
 }
 
 .wrapper .wrapper-left ul li p{
-    color: #ffffff;
+    color: #000000;
     position: relative;
-
+    text-transform: uppercase;
 }
 
-.wrapper .wrapper-left ul li p:before{
+.wrapper .wrapper-left ul li:before{
     content: "";
     position: absolute;
     top: 0;
@@ -90,11 +107,28 @@ body{
     background: linear-gradient(
         126deg,
         rgba(2, 0, 36, 1) 0%,
-        rgba(123, 90, 231, 1) 0%,
-        rgba(88, 54, 206, 1) 100%
+        rgba(213, 115, 88, 0.356) 0%,
+        rgb(213, 115, 88) 100%
     );
     border-radius: 5px;
     border-top-right-radius: 0;
     border-top-right-radius: 0;
     transition: all 0.4s ease;
+}
+
+.wrapper .wrapper-left ul li.active {
+    width: 100%;
+}
+
+.wrapper .wrapper-left ul li.active p {
+    color: #fff;
+}
+
+.wrapper .wrapper-left ul li.active:before {
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.wrapper .wrapper-left ul li:last-child {
+    margin-bottom: 0;
 }

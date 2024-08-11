@@ -9,18 +9,25 @@
 <body>
     <div class="wrapper">
         <div class="wrapper-left">
-            <div class="wrapper-left-heading">
-                Municipios
+            <div class="title">
+                Filtrar por Municipio
             </div>
             <ul>
+                <li data-li="all" class="active">
+                    <p>
+                        Todos
+                    </p>
+                </li>
                 {% for loc in location %}
                 <li data-li="{{loc.NormalizedName}}"> 
-                    <p>{{loc.Name}}</p>
+                    <p>
+                        {{loc.Name}}
+                    </p>
                 </li>
                 {% endfor %}
             </ul>
         </div>
-        <div class="wrapper-right">
+        <!-- <div class="wrapper-right">
             <div class="title">
                 Artículos
             </div>
@@ -60,7 +67,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
+    <script src="{{ url_for('static', filename='styles/scripts.js') }}"></script>
 </body>
 </html>
