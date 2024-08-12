@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root{
+    /* CSS HEX */
+    --cerulean: #4281a4ff;
+    --verdigris: #48a9a6ff;
+    --timberwolf: #e4dfdaff;
+    --ecru: #d4b483ff;
+    --indian-red: #c1666bff;
+    --steel-grey: #71797E;
+}
+
 * {
-    /* outline: 1px solid red; */
+    outline: 1px solid red;
     max-width: 100%;
     max-height: 100%;
     margin: 0;
@@ -12,28 +22,28 @@
 }
 
 body {
-    background: #f8f5f1;
     font-size: 100%;
     line-height: 24px;
+    background: whitesmoke;
 }
 
 .wrapper {
+    display: flex;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #f8f5f1;
-    width: 90%;
-    height: 90%;
-    display: flex;
+    width: 75%;
+    height: 85%;
     border-radius: 15px;
+    background: whitesmoke;
 }
 
 .wrapper .wrapper-left {
-    width: 40%;
-    background: #f8f5f1;
-    padding: 10px 25px;
     display: flex;
+    width: 30%;
+    padding: 10px 25px;
+    background: var(--steel-grey);
     align-items: center;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -43,26 +53,29 @@ body {
 .wrapper .wrapper-left .title {
     position: relative;
     bottom: 45%;
-    font-size: 32px;
+    width: 100%;
+    padding: 5px 0px;
+    background-color: var(--steel-grey);
+    font-size: 1.109rem;
     text-align: center;
     text-transform: uppercase;
-    color: #ffffff;
     font-weight: 700;
-    width: 100%;
-    background-color: #d67459;
-    border-width: 1px;
-    border-color: #d67459;
+    color: whitesmoke;
+    border-width: 3px;
     border-style: solid;
     border-radius: 3px;
-    padding: 10px 15px;
+    border-bottom-color: black;
+    border-left-color: var(--steel-grey);
+    border-top-color: var(--steel-grey);
+    border-right-color: var(--steel-grey);
 }
 
 .wrapper .wrapper-left ul {
     position: absolute;
-    top: 12%;
-    right: 65%;
-    width: 30%;
-    height: 85%;
+    top: 15%;
+    right: 72.5%;
+    width: 25%;
+    height: 80%;
     padding: 10px 10px;
     border-radius: 3px;
     overflow-y: scroll;
@@ -76,15 +89,15 @@ body {
 }
 
 .wrapper .wrapper-left ul li{
-    background: #ece5d3;
+    position: relative;
+    left: 0%;
+    width: 300px;
     margin-bottom: 5px;
     border-radius: 3px;
     padding: 10px 15px;
+    background: var(--steel-grey);
     font-weight: 500;
-    position: relative;
-    left: 0%;
     overflow: hidden;
-    width: 300px;
     letter-spacing: 2px;
     transition: all 400ms ease;
     cursor: pointer;
@@ -103,12 +116,12 @@ body {
     left: 0;
     width: 5px;
     height: 100%;
-    background: #373737;
+    background: var(--steel-grey);
     background: linear-gradient(
         126deg,
         rgba(2, 0, 36, 1) 0%,
-        rgba(213, 115, 88, 0.356) 0%,
-        rgb(213, 115, 88) 100%
+        var(--steel-grey) 0%,
+        var(--verdigris) 100%
     );
     border-radius: 5px;
     border-top-right-radius: 0;
@@ -121,7 +134,7 @@ body {
 }
 
 .wrapper .wrapper-left ul li.active p {
-    color: #fff;
+    color: whitesmoke;
 }
 
 .wrapper .wrapper-left ul li.active:before {
@@ -131,4 +144,41 @@ body {
 
 .wrapper .wrapper-left ul li:last-child {
     margin-bottom: 0;
+}
+
+.wrapper .wrapper-right {
+    width: 70%;
+    background: transparent;
+    padding: 10px 25px;
+    align-items: center;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.wrapper .wrapper-right .title {
+    position: relative;
+    top: 0.5%;
+    padding: 5px 0px;
+    width: 100%;
+    font-size: 1.109rem;
+    background-color: transparent;
+    font-size: 1.109rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--verdigris);
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 3px;
+    border-bottom-color: black;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
+
+.wrapper .wrapper-right .table-container {
+    position: relative;
+    top: 5%;
+    width: 100%;
+    height: 83%;
 }

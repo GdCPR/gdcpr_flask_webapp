@@ -27,47 +27,49 @@
                 {% endfor %}
             </ul>
         </div>
-        <!-- <div class="wrapper-right">
+        <div class="wrapper-right">
             <div class="title">
                 Artículos
             </div>
-            <div class="table_container">
-                <div class="table_head">
-                    <thead>
+            <div class="table-container">
+                container
+                <div class="table-head">
+                    head
+                    <!-- <thead>
                         <th scope="col">
                             Titular
                         </th>
                         <th scope="col">
                             Fecha/Hora
                         </th>
-                    </thead>
+                    </thead> -->
                 </div>
-                <div class="table_body">
+                <!-- <div class="table-body">
                     {% for article in articles %}
                     <tr>
                         <td>
-                            <p class="article_headline">
+                            <p class="article-headline">
                                 <a href="{{article.URL}}">
                                     {{article.headline}}
                                 </a>
                             </p>
-                            <p class="article_author">
+                            <p class="article-author">
                                 {{article.Author}}
                             </p>
-                            <p class="article_subheadline">
+                            <p class="article-subheadline">
                                 {{article.Subheadline}}
                             </p>
                         </td>
                         <td>
-                            <p class="article_datetime">
+                            <p class="article-datetime">
                                 {{article.DateTime}}
                             </p>
                         </td>
                     </tr>
                     {% endfor %}
-                </div>
+                </div> -->
             </div>
-        </div> -->
+        </div>
     </div>
     <script src="{{ url_for('static', filename='styles/scripts.js') }}"></script>
 </body>
