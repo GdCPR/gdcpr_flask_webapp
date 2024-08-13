@@ -21,7 +21,7 @@ def home():
     cursor.execute("""SELECT NormalizedName, Name FROM Location ORDER BY LocationID""")
     result = cursor.fetchall()
     locationObj = []
-    columnNames = [column[0] for column in cursor.description] # type: ignore
+    columnNames = [column[0] for column in cursor.description]
     for record in result:
         locationObj.append(dict(zip(columnNames, record)))
 
@@ -30,11 +30,11 @@ def home():
     result = cursor.fetchall()
     # Convertir datos a dict
     articlesObj = []
-    columnNames = [column[0] for column in cursor.description] # type: ignore
+    columnNames = [column[0] for column in cursor.description]
     for record in result:
         articlesObj.append(dict(zip(columnNames, record)))
     cursor.close()
-    return render_template("index.html",
+    return render_template("home.html",
                            articles=articlesObj,
                            location=locationObj)
 
