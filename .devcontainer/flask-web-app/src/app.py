@@ -9,40 +9,23 @@ template_dir = os.path.join(app_dir, "src", "templates")
 app = Flask(__name__, template_folder=template_dir)
 
 dbmanager = DBManager()
-db = dbmanager.dbconnection
 
 # Rutas de la aplicación
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        location = request.form['location']
-        if location:
-            return jsonify({'output': f"The selected location is: {location}"})
+        locationid = request.form['location']
+        if locationid:
+            articlesObj = dbmanager.get_articles_from_location_object(int(locationid))
+            return {'output': f"Client selected location with ID: {locationid}",
+                    "articlesObj": articlesObj}
         return jsonify({'error' : 'Error!'})
-
-    db.reconnect()
-    cursor = db.cursor(buffered=True)
-
-    # Fetch Locations
-    cursor.execute("""SELECT LocationID, NormalizedName, Name FROM Location ORDER BY LocationID""")
-    result = cursor.fetchall()
-    locationObj = []
-    columnNames = [column[0] for column in cursor.description] # type: ignore
-    for record in result:
-        locationObj.append(dict(zip(columnNames, record)))
-
-    # Fetch Articles
-    cursor.execute("""SELECT * FROM Articles ORDER BY DateTime DESC""")
-    result = cursor.fetchall()
-    # Convertir datos a dict
-    articlesObj = []
-    columnNames = [column[0] for column in cursor.description] # type: ignore
-    for record in result:
-        articlesObj.append(dict(zip(columnNames, record)))
-    cursor.close()
-    return render_template("index.html",
-                           articles=articlesObj,
-                           location=locationObj)
+    else:
+        locationObj = dbmanager.get_location_object()
+        articlesObj = dbmanager.get_all_articles_object()
+        return render_template("index.html",
+                        articles=articlesObj,
+                        location=locationObj)
 
 if __name__ == "__main__":
     app.run(debug=True, port=4327)

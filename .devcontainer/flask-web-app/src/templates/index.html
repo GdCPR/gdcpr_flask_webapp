@@ -16,7 +16,7 @@
                 Seleccionar Ubicación
             </div>
             <ul>
-                <li class="active">
+                <li class="active" id=0>
                     <p>
                         Todos
                     </p>
@@ -35,6 +35,7 @@
                 Artículos
             </div>
             <div class="table-container">
+                <p id="output" style="color: red; font-weight: bolder;"> </p>
                 <table>
                     <thead>
                         <tr>
@@ -42,14 +43,13 @@
                             <th>Titular</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="articles-table">
                         {% for article in articles %}
                             <tr>
                                 <td data-cell="datetime">
                                     {{article.DateTime}}
                                 </td>
-                                <td data-cell="headline-author-subheadline">
-                                    <a href="{{article.URL}}" target="_blank">{{article.Headline}}</a>
+                                <td data-cell="headline-author-subheadline"><a href="{{article.URL}}" target="_blank">{{article.Headline}}</a>
                                     <p>{{article.Subheadline}}</p>
                                     <p>Por: {{article.Author}}</p>
                                 </td>
@@ -58,7 +58,6 @@
                     </tbody>
                 </table>
             </div>
-            <p id="output"> output</p>
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

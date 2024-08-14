@@ -2,7 +2,7 @@ import logging
 import enlighten
 import mysql.connector
 import mysql.connector.abstracts 
-# from helpers import constants_querys as query
+from helpers import constants_querys as query
 from helpers.constants_db import clever_cloud_db_credentials as credentials
 
 logging.basicConfig(level=logging.INFO,
@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger(__name__)
 
 class DBManager:
-    """This is an object that performs database querys and manipulation"""
+    """This is an object that performs database querys"""
     cursor: mysql.connector.abstracts.MySQLCursorAbstract    
     data: dict
     article_id: int
@@ -22,152 +22,174 @@ class DBManager:
         """Object initialization"""
         logger.info("Initializing DBManager")
         
-        self.dbconnection = mysql.connector.connect(**credentials)
 
+    def get_location_object(self) -> list:
+        """
+        Retrieve locations data from database
+        
+        :return: List of dictionaries with location NormalizedName and Name
+        data
+        :rtype: list
+        """
+        logger.info("Fetching locations")
+        
         logger.info("Creating cursor object")
-
-        self.cursor = self.dbconnection.cursor(buffered=True)
-
-    def _validate_location(self) -> bool:
-        """
-        Validate location found in article with official locations list
+        dbconnection = mysql.connector.connect(**credentials)
+        cursor = dbconnection.cursor(buffered=True)
         
-        :return: True or False based if location found is in official
-        location list
-        :rtype: bool 
-        """
-        logger.info("Validating article location")
-
-        self.cursor.execute(query.FETCH_NORMALIZED_NAME)
-        normalized_loc_name = self.cursor.fetchall()
-        official_loc = [row[0] for row in normalized_loc_name] # type: ignore
-        validated_loc = set(self.data["location"]) & set(official_loc)
-        self.data["valid_loc"] = validated_loc
-
-        logger.info(f"Official location? {True if validated_loc else False}")
-
-        return True if validated_loc else False
-
-    def _get_location_id(self, location: str) -> None:
-        """
-        Fetch location id from database
-
-        :param location: Location to check in database
-        :type location: str
-        """
-        logger.info("Getting location ID")
-
-        self.cursor.execute(query.FETCH_NORMALIZED_NAME_ID,
-                            {"validated_location": location})
+        logger.info("Querying and fetching locations data")
         
-        for row in self.cursor.fetchall():
-            if location == row[1]: # type: ignore
-                self.locationid = row[0] # type: ignore
-
-        logger.info(f"Location: {location}")
-        logger.info(f"ID: {self.locationid}")
-
-    def _insert_bridge_tb(self) -> None:
-        """Insert Article-Location relation in database"""
-        logger.info("Inserting data in bridge table")
-
-        self.cursor.execute(query.INSERT_ARTICLE_LOCATION_RELATION,
-                            {"articleid": self.data["articleid"],
-                             "locationid": self.locationid}) # type: ignore
-
-        self.dbconnection.commit()
-
-        logger.info(f"Article id: {self.data["articleid"]}")
-        logger.info(f"Location id: {self.locationid}")
-
-    def _get_total_articles(self) -> None:
-        """Fetch total articles in database"""
-        logger.info("Fetching total articles in database")
-
-        self.cursor.execute(query.ARTICLE_MAXID)
-        self.article_total = int(self.cursor.fetchone()[0])  # type: ignore
-
-        logger.info(f"Total articles: {self.article_total}")
-
-    def _calculate_relevance_score(self):
-        """Calculate location relevance score"""
-        # logger.info("Calculating Relevance Score")
-
-        self.cursor.execute(query.COUNT,
-                            {"locationid": self.locationid}) # type: ignore
-        loc_count = int(self.cursor.fetchone()[0]) # type: ignore
-
-        self.score = loc_count/self.article_total
-
-        # logger.info(f"Relevance score: {self.score}")
-
-    def _insert_relevance_score(self) -> None:
-        """Update location relevance score in database"""
-        logger.info("Updating Relevance Score")
-
-        self._get_total_articles()
-        self.cursor.execute(query.FETCH_LOCATION_ID)
-
-        # Create progress bar manager handler
-        manager = enlighten.get_manager()
-        # Create basic progress bar
-        pbar = manager.counter(desc='Progress', unit='ticks')
+        cursor.execute(query.RETRIEVE_LOCATIONS)
+        result = cursor.fetchall()
         
-        for row in self.cursor.fetchall(): # type: ignore
-                self.locationid = row[0] # type: ignore
-                self._calculate_relevance_score()
-                self.cursor.execute(query.UPDATE_RELEVACE_SCORE,
-                                    {"locationid": self.locationid,
-                                     "score": self.score}) # type: ignore
-                self.dbconnection.commit()
-                pbar.update()
-
-        logger.info(f"Rrelevance scores successfully updated")
+        logger.info("Constructing data list")
         
-        manager.stop()
+        locationObj = []
+        columnNames = [column[0] for column in cursor.description] # type: ignore
+        record = ()
+        for record in result:
+            locationObj.append(dict(zip(columnNames, record)))
+        
+        logger.info("List created")
+
+        logger.info("Closing cursor object")
+        
+        cursor.close()
+        dbconnection.close()
+        
+        logger.info("Cursor closed")
+
+        return locationObj
+
+    def get_all_articles_object(self) -> list:
+        """
+        Retrieve all articles data from database
+        
+        :return: List of dictionaries with articles data
+        :rtype: list
+        """
+        logger.info("Fetching articles data")
+        
+        logger.info("Creating cursor object")
+        dbconnection = mysql.connector.connect(**credentials)
+        cursor = dbconnection.cursor(buffered=True)
+        
+        logger.info("Querying and fetching articles data")
+        
+        cursor.execute(query.RETRIEVE_ALL_ARTICLES)
+        result = cursor.fetchall()
+        
+        logger.info("Constructing data list")
+
+        articlesObj = []
+        columnNames = [column[0] for column in cursor.description] # type: ignore
+        record = ()
+        for record in result:
+            articlesObj.append(dict(zip(columnNames, record)))
+        
+        logger.info("List created")
+
+        logger.info("Closing cursor object")
+        
+        cursor.close()
+        dbconnection.close()
+        
+        logger.info("Cursor closed")
+
+        return articlesObj
+
+    def _get_article_ids(self, location_id_dict: dict) -> tuple:
+        """
+        Private method to retrieve all article IDs with specified location
+        id
+        
+        :return: Tuple of article ids
+        :rtype: tuple
+        """
+        logger.info("Fetching article IDs")
+        
+        logger.info("Creating cursor object")
+        dbconnection = mysql.connector.connect(**credentials)
+        cursor = dbconnection.cursor(buffered=True)
+        
+        logger.info("Querying and fetching articles data")
+        
+        cursor.execute(query.RETRIEVE_ARTICLEID_FROM_LOCATIONID,
+                       location_id_dict)
+        result = cursor.fetchall()
+        
+        logger.info("Constructing data list")
+
+        articleIDs = ()
+        for rec in result:
+            articleIDs = articleIDs + rec # type: ignore
+        
+        logger.info("List created")
+
+        logger.info("Closing cursor object")
+        
+        cursor.close()
+        dbconnection.close()
+        
+        logger.info("Cursor closed")
+
+        return articleIDs
     
-    def _insert_article_data(self) -> None:
-        """Insert article data in database"""
-        logger.info("Inserting article data")
-
-        tmp_data_dict = self.data.copy()
-        tmp_data_dict.pop("location")
-        self.cursor.execute(query.INSERT_ARTICLE, tmp_data_dict)
-        self.dbconnection.commit()
-        self.data["articleid"] = self.cursor.lastrowid # type: ignore
-
-        logger.info("Article data successfully inserted")
-
-    def check_hash(self, article_hash: dict) -> bool:
-        """Check article hash exists in database"""
-        logger.info("Checking article hash")
-        
-        self.cursor.execute(query.CHECK_HASH, article_hash)
-        check = self.cursor.rowcount
-
-        logger.info(f"Article exixts in database? {True if check else False}")
-
-        return True if check else False
-
-    def write_in_tables(self, data: dict) -> None:
+    def get_articles_from_location_object(self, location_id: int) -> list:
         """
-        Executes private methods to insert article data in database, validate
-        location found, insert article-location relation, and update relevance
-        score
-
-        :param data: Article data
-        :type data: dict
-        """
-        self.data = data
-
-        self._insert_article_data()
+        Retrieve all articles data specified location
         
-        if self._validate_location():
-            for loc in self.data["valid_loc"]:
-                self._get_location_id(location=loc)
-                self._insert_bridge_tb()
-    
-        self._insert_relevance_score()
+        :return: List of dictionaries with articles data
+        :rtype: list
+        """
+        logger.info("Fetching articles data from specified location")
+        
+        logger.info("Creating cursor object")
+        dbconnection = mysql.connector.connect(**credentials)
+        cursor = dbconnection.cursor(buffered=True)
+        
+        logger.info("Querying and fetching articles data")
 
-        self.cursor.close()
-        self.dbconnection.close()
+        if location_id == 0:
+            return self.get_all_articles_object()
+        else:
+            query_data = {"locationid": location_id}
+            articleIDs = self._get_article_ids(location_id_dict=query_data)
+            
+            logger.info(articleIDs)
+            
+            if len(articleIDs) > 1:
+                cursor.execute(f"""SELECT *
+                            FROM Articles
+                            WHERE ArticleID IN {articleIDs}
+                            ORDER BY DateTime DESC
+                            """)
+            elif len(articleIDs) == 1:
+                cursor.execute(f"""SELECT *
+                            FROM Articles
+                            WHERE ArticleID = {articleIDs[0]}
+                            ORDER BY DateTime DESC
+                            """)
+            else:
+                return []
+            
+            result = cursor.fetchall()
+        
+            logger.info("Constructing data list")
+
+            articlesObj = []
+            columnNames = [column[0] for column in cursor.description] # type: ignore
+            record = ()
+            for record in result:
+                articlesObj.append(dict(zip(columnNames, record)))
+            
+            logger.info("List created")
+
+            logger.info("Closing cursor object")
+            
+            cursor.close()
+            dbconnection.close()
+            
+            logger.info("Cursor closed")
+
+            return articlesObj
