@@ -2,14 +2,18 @@
 
 :root{
     /* CSS HEX */
+    --old-blue: hsl(214, 100%, 15%);
+    --also-blue: hsla(214, 100%, 15%, 0.696);
+    --busy-red: hsl(348, 100%, 56%);
     --cerulean: #4281a4ff;
     --verdigris: rgb(72, 169, 166);
     --verdigris-opaque: rgba(72, 169, 166, 0.65);
     --timberwolf: #e4dfdaff;
     --ecru: #d4b483ff;
     --indian-red: #c1666bff;
-    --steel-grey: rgb(114, 121, 126);
-    --steel-grey-opaque: rgba(114, 121, 126, 0.25);
+    --steel-grey: #72797e;
+    --steel-grey-glass: rgba(114, 121, 126, 0.63);
+    --steel-grey-opaque: rgba(114, 121, 126, 0.172);
 }
 
 * {
@@ -24,7 +28,8 @@ body {
     align-items: center;
     width: 100vmax;
     font-size: 1rem;
-    background: whitesmoke;
+    color: whitesmoke;
+    background: var(--old-blue);
 }
 
 .title {
@@ -45,7 +50,7 @@ body {
     width: 80vw;
     height: 80vh;
     border-radius: 15px;
-    background: whitesmoke;
+    background: transparent;
 }
 
 .wrapper .wrapper-left {
@@ -60,7 +65,8 @@ body {
     padding: 0.5rem 1.1rem;
     border-top-left-radius: 0.90rem;
     border-bottom-left-radius: 0.90rem;
-    background-color: var(--steel-grey);
+    border: 0.1rem solid var(--busy-red);
+    background-color: var(--old-blue);
     box-shadow: 0.75rem 0 0.85rem 0 rgba(41, 41, 57, 0.7);
 }
 
@@ -113,7 +119,7 @@ body {
 }
 
 .wrapper .wrapper-left ul li p{
-    color: #000000;
+    color: whitesmoke;
     font-weight: bold;
     font-size: calc(0.05rem + 0.9vmax);
     text-transform: uppercase;
@@ -145,7 +151,7 @@ body {
 
 .wrapper .wrapper-left ul li.active p {
     font-weight: bold;
-    color: whitesmoke;
+    color: var(--busy-red);
 }
 
 .wrapper .wrapper-left ul li.active:before {
@@ -172,11 +178,11 @@ body {
     height: calc(35% + 0.9vh);
     background-color: transparent;
     font-size: calc(0.25rem + 0.9vmax);
-    padding: 0.25rem;
+    padding: 0.65rem;
     text-align: center;
     text-transform: uppercase;
     font-weight: bolder;
-    color: black;
+    color: whitesmoke;
     border-width: 0.15rem;
     border-style: solid;
     border-radius: 1px;
@@ -193,7 +199,6 @@ body {
 }
 
 table {
-    /* border-collapse: collapse; */
     background: transparent;
     height: 90%;
 }
@@ -208,13 +213,14 @@ tbody {
     overflow-y: auto;
     table-layout: fixed;
     max-height: 58vh;
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none;  /* Hide scrollbar for Firefox */
 }
 
 th {
     padding: 0.25rem;
     font-size: calc(0.25rem + 0.9vmax);
     font-weight: bold;
-    /* text-align: left; */
     vertical-align: bottom;
 }
 
@@ -228,9 +234,6 @@ th:nth-child(2) {
     text-align: center;
 }
 
-tbody {
-    overflow-y: auto;
-}
 
 td {
     border: 0.15rem solid;
@@ -253,7 +256,8 @@ td:nth-child(2) {
 
 td a {
     font-weight: bold;
-    color: var(--indian-red);
+    color: var(--busy-red);
+    text-decoration: none;
 }
 
 td p {
@@ -262,5 +266,5 @@ td p {
 }
 
 td p:nth-last-child(1) {
-    color: var(--cerulean);
+    color: var(--ecru);
 }

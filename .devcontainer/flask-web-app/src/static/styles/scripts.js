@@ -12,3 +12,17 @@ for (var i = 0; i < li_elements.length; i++) {
     });
   })
 }
+
+$(document).ready(function() {
+  $('.wrapper-left ul li').on('click', function(e){
+    $.ajax({
+      type : 'POST',
+      url : '/',
+      data : {"location": this.id}
+    })
+    .done(function(data){
+      console.log(data.output)
+    });
+    e.preventDefault();
+  });
+});

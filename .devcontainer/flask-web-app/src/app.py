@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, jsonify
 from helpers.manager_db import DBManager
 # import logging
 
@@ -13,7 +13,13 @@ db = dbmanager.dbconnection
 
 # Rutas de la aplicación
 @app.route("/", methods=["GET", "POST"])
-def home():
+def index():
+    if request.method == "POST":
+        location = request.form['location']
+        if location:
+            return jsonify({'output': f"The selected location is: {location}"})
+        return jsonify({'error' : 'Error!'})
+
     db.reconnect()
     cursor = db.cursor(buffered=True)
 
@@ -37,11 +43,6 @@ def home():
     return render_template("index.html",
                            articles=articlesObj,
                            location=locationObj)
-
-@app.route("/location/<string:loc>" , methods=['GET', 'POST'])
-def filter(loc):
-
-    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(debug=True, port=4327)
