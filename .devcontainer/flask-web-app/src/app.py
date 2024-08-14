@@ -24,7 +24,7 @@ def index():
     cursor = db.cursor(buffered=True)
 
     # Fetch Locations
-    cursor.execute("""SELECT NormalizedName, Name FROM Location ORDER BY LocationID""")
+    cursor.execute("""SELECT LocationID, NormalizedName, Name FROM Location ORDER BY LocationID""")
     result = cursor.fetchall()
     locationObj = []
     columnNames = [column[0] for column in cursor.description] # type: ignore
