@@ -1,0 +1,100 @@
+/*#region html, body */
+:root {
+    --map-region-fill: #C3C3C3;
+    --map-stroke-color: #FFFFFF;
+    --map-stroke-width: 1.1249;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    background-color: whitesmoke;
+    text-align: center;
+}
+/*#endregion html, body  */
+
+.contanier.title > a {
+    color: red;
+    font-size: 2rem;
+}
+
+.contanier.title {
+    font-size: 1.5rem;
+}
+
+#map {
+    width: 100%;
+    height: auto;
+    fill: #ccc;
+    stroke: #333;
+    stroke-width: 2;
+}
+
+.municipio {
+    fill:"#C3C3C3";
+    stroke:"#C3C3C3";
+    stroke-width:"1.1249";
+}
+
+path,
+polygon {
+    fill: grey;
+    stroke: blue;
+    stroke-width: 0.025rem;
+}
+
+path:hover,
+polygon:hover {
+    fill: purple;
+    stroke: red;
+    stroke-width: 0.05rem;
+    transition: fill 0.4s;
+}
+
+/* #region menu button */
+.menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    text-align:center;
+}
+
+.menu a {
+    padding: 0.25rem;
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: #818181;
+    display: block;
+    transition: 300ms;
+
+}
+
+.menu a:hover{
+    color: black;
+}
+
+span.menu-open-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.menu .menu-close-btn {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    font-size: 2rem;
+}
+
+@media screen and (max-height: 450px) {
+    .menu {padding-top: 0.98rem;}
+}
+/* #endregion menu button */
