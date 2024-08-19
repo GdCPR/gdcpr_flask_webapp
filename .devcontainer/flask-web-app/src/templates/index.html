@@ -4,62 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/index.css') }}">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>LodES</title>
 </head>
 <body>
-    <div class="title">
-        Geolocalización del Crimen - PR
-    </div>
-    <div class="wrapper">
-        <div class="wrapper-left">
-            <div class="title">
-                Seleccionar Ubicación
-            </div>
-            <ul>
-                <li class="active" id=0>
-                    <p>
-                        Todos
-                    </p>
-                </li>
-                {% for loc in location %}
-                <li id="{{loc.LocationID}}"> 
-                    <p>
-                        {{loc.Name}}
-                    </p>
-                </li>
-                {% endfor %}
-            </ul>
+    <main class="container">
+        <div class="wrapper title">
+            Localizador de Eventos de Seguridad - PR
         </div>
-        <div class="wrapper-right">
-            <div class="title">
-                Artículos
-            </div>
-            <div class="table-container">
-                <p id="output" style="color: red; font-weight: bolder;"></p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Fecha / Hora</th>
-                            <th>Titular</th>
-                        </tr>
-                    </thead>
-                    <tbody id="articles-table">
-                        {% for article in articles %}
-                            <tr>
-                                <td data-cell="datetime">
-                                    {{article.DateTime}}
-                                </td>
-                                <td data-cell="headline-author-subheadline"><a href="{{article.URL}}" target="_blank">{{article.Headline}}</a>
-                                    <p>{{article.Subheadline}}</p>
-                                    <p>Por: {{article.Author}}</p>
-                                </td>
-                            </tr>
+        <div class="wrapper body">
+            <div class="panel ubicacion">
+                <div class="panel-title panel-title-ubicacion">
+                    Ubicación
+                </div>
+                <div class="panel-body ubicacion">
+                    <ul>
+                        <li class="active" id="0">
+                            <p>Todos</p>
+                        </li>
+                        {% for loc in location %}
+                        <li id="{{loc.LocationID}}">
+                            <p>{{loc.Name}}</p>
+                        </li>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </ul>                
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-title">
+                    Datos Generales
+                </div>
+                <div class="panel-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha / Hora</th>
+                                <th>Titular</th>
+                            </tr>
+                        </thead>
+                        <tbody id="articles-table">
+                            {% for article in articles %}
+                                <tr>
+                                    <td data-cell="datetime">
+                                        {{article.DateTime}}
+                                    </td>
+                                    <td data-cell="headline-author-subheadline"><a href="{{article.URL}}" target="_blank">{{article.Headline}}</a>
+                                        <p>{{article.Subheadline}}</p>
+                                        <p>Por: {{article.Author}}</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+        <!-- <div class="wrapper-right">
+                <div class="title">
+                    Artículos
+                </div>
+                <div class="table-container">
+                    <p id="output" style="color: red; font-weight: bolder;"></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha / Hora</th>
+                                <th>Titular</th>
+                            </tr>
+                        </thead>
+                        <tbody id="articles-table">
+                            {% for article in articles %}
+                                <tr>
+                                    <td data-cell="datetime">
+                                        {{article.DateTime}}
+                                    </td>
+                                    <td data-cell="headline-author-subheadline"><a href="{{article.URL}}" target="_blank">{{article.Headline}}</a>
+                                        <p>{{article.Subheadline}}</p>
+                                        <p>Por: {{article.Author}}</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> -->
+    </main>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write("<script src = '{{ url_for('static', filename='styles/jquery.js') }}'>\x3C/script>")</script>
     <script src="{{ url_for('static', filename='styles/scripts.js') }}"></script>

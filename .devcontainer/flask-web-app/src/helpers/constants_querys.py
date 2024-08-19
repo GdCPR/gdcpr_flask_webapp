@@ -1,5 +1,5 @@
 RETRIEVE_LOCATIONS = """
-SELECT LocationID, NormalizedName, Name
+SELECT *
 FROM Location
 ORDER BY LocationID
 """

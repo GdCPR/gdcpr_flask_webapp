@@ -1,4 +1,4 @@
-var li_elements = document.querySelectorAll(".wrapper-left ul li");
+var li_elements = document.querySelectorAll("li");
 var item_elements = document.querySelectorAll(".item");
 for (var i = 0; i < li_elements.length; i++) {
   li_elements[i].addEventListener("click", function() {
@@ -14,7 +14,7 @@ for (var i = 0; i < li_elements.length; i++) {
 }
 
 $(document).ready(function() {
-  $('.wrapper-left ul li').on('click', function(e){
+  $('li').on('click', function(e){
     $.ajax({
       type : 'POST',
       url : '/',
@@ -25,9 +25,9 @@ $(document).ready(function() {
       console.log(data.articlesObj.length)
       if (data.articlesObj.length == 0) {
         // $('.table-container').empty();
-        $('#output').text("Showing all articles because database do not contain articles tagged with selected location").show() // Make txt appear in element with id #output
+        $('table').hide();
       } else if (data.articlesObj.length > 0) {
-        $('#output').hide()
+        $('table').show()
         $('#articles-table').html("");
         for (var i = 0; i < data.articlesObj.length; i++) {
           var row = data.articlesObj[i];
