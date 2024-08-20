@@ -61,6 +61,7 @@ function home() {
 // end map zoom-pan
 
 
+// Functions from library: https://github.com/anvaka/panzoom
 var instance = panzoom(document.getElementById('matrix-group'));
 
 instance.on('panstart', function(e) {
@@ -89,7 +90,9 @@ instance.on('transform', function(e) {
 // To fix the elements below to the refular dom flow, I have insert a blank element
 // below the absolute positioned one and use the lines below to get the absolute positioned
 // elemet height and make the blank element this height to force the other elements follow
-// through  
+// through
+// Solution from: https://stackoverflow.com/a/55418299
+// Some changes added from original solution to work with my DOM structure
 let absoluteDivHeight = document.getElementsByTagName('svg')[0].height.animVal.value;
 console.log(absoluteDivHeight)
 let blankDiv = document.getElementsByClassName('blankDiv')[0];
