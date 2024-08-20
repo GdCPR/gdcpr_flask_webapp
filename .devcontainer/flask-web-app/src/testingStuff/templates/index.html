@@ -35,44 +35,6 @@
 		</div>
         
         <div class="content">
-			<div class="container-map-navigation">
-				<div class="map-navigation-buttonn up">
-					<a href="javascript:void(0);" class="navigation-buttonn up" onclick="pan(0, -25)">
-						&uarr;
-					</a>
-				</div>
-				<div class="map-navigation-buttonn down">
-					<a href="javascript:void(0);" class="navigation-buttonn down" onclick="pan(0, 25)">
-						&darr;
-					</a>
-				</div>
-				<div class="map-navigation-buttonn left">
-					<a href="javascript:void(0);" class="navigation-buttonn left" onclick="pan(-50, 0)">
-						&larr;
-					</a>
-				</div>
-				<div class="map-navigation-buttonn right">
-					<a href="javascript:void(0);" class="navigation-buttonn right" onclick="pan(50, 0)">
-						&rarr;
-					</a>
-				</div>
-				<div class="map-navigation-buttonn zoomin">
-					<a href="javascript:void(0);" class="navigation-buttonn zoomin" onclick="zoom(1.25)">
-						&plus;
-					</a>
-				</div>
-				<div class="map-navigation-buttonn zoomout">
-					<a href="javascript:void(0);" class="navigation-buttonn zoomout" onclick="zoom(0.8)">
-						&minus;
-					</a>
-				</div>
-				<div class="map-navigation-buttonn home">
-					<a href="javascript:void(0);" class="navigation-buttonn home" onclick="home(0, 0, 0, 0, 0, 0)">
-						&#8962;
-					</a>
-				</div>
-			</div>
-
             <div class="container-map">
                 <svg id="map"
 					version="1.1"
@@ -81,7 +43,7 @@
 					viewBox="-50 -50 1400 400"
 					xml:space="preserve">
 					<defs></defs>
-					<g id="matrix-group">
+					<g id="matrix-group" transform="matrix(1 0 0 1 0 0)">
 						<path class="municipio" id="isla-de-mona" d="M8.2,200l0-1.1l0.5-1.2l1.2-0.6l1.2-0.4l1.5-0.5 l1.3-0.3l1.5-0.7l3.2-1.2l1.1-0.3l1.3,0.2l1.2,0.4l1.4,0.7l0.9,0.6l1.4,0.4l1.5,0.3l1.6,0.5l1,0.4l1.1,0.2l1.5-0.1l1.2-0.3l1.4-0.1 l1.6-0.3l1.5-1l1.3-1L41,194l1-0.4l1.1-0.5l1,0.5l0.9,1.1l0.5,0.9l0.8,1.4l1.5,0.8l1.1,0.9l0.6,1.6l0.5,1.2l0.4,1.1l0.5,1.9l0.4,1.7 l0.2,1.2l0.1,2.3l-0.1,1.3l-0.5,1.2l-0.9,0.6l-1,0.1l-1.3,0.8l-1.3,1l-0.7,0.8l-0.9,0.9l-1.7,2l-1.2,1.4l-0.8,0.9l-1.1,1.6l-0.7,1.1 l-1.4,0.9l-1.8,0.8l-1.3,0.4l-1.2,0.5l-2.3,0.4l-1.3,0.1l-1.5,0.2l-1.1-0.2l-1.3,0.3l-1.4-0.9l-1.1-1.1l-1-0.6l-0.8-0.8l-1.3-0.4 l-1.3-0.5l-1.2-0.4l-3.5-1.1l-1.1-0.6l-1.1-1.2l-0.9-0.8l-0.8-0.6L10,217l-1.7-2.2l-0.9-1.1l-1.2-0.5l-1.4,0.1l-1.3-0.7l-0.4-1 l0.9-0.9l1.1-1l0.7-0.8l1.5-4.1l0.5-1.9l0.2-1.7L8.2,200z"/>
 						<path class="municipio" id="isla-caja-de-muertos" d="M668.1,303.4l1.1,0.6l0.6,1.2l-3.5,3.5l-4.4,2.9 l-5.8,3.9l1.7-6.2l1.5-1.7l7.2-5.6L668.1,303.4z"/>
 						<path class="municipio" id="isla-de-desecheo" d="M221.8,62.7h0.2l0.3,0.3l0.3,0.1h0.5l0.4-0.2 l0.4-0.2l0.3-0.2l0-0.1l0-0.4l0-0.1l1.1-0.9l0.5,0l0.3,0l0.2-0.2h0.4l0.2,0l0.5,0.4l0.5,0.6l0.5,0.2l0.1,0.1l0,0.3l0.2,0.3l0.6,0.9 l0.7,0.6l0.3,0.2l0,0.4l-0.1,0.2l-0.2,0.2l-0.2,0l-0.3,0.1l-0.5,0.2l-0.6,0.5l-0.2,0.3l-0.3,0.2l0,0.3l-0.1,0.1h-0.4l-0.2,0 l-0.7-0.2l-0.5-0.3l-0.3-0.2l-0.5-0.3l-0.5-0.4l-0.7-0.4l-0.8-0.7l-1-0.9L221.8,62.7z"/>
@@ -176,16 +138,59 @@
 					</g>
                 </svg>
             </div>
-
-			<div class="container-statistics">
-				Here Goes: The general statistics Pane
+			<div class="container-map-navigation-wrapper">
+				<div class="container-map-navigation">
+					<div class="map-navigation-buttonn up">
+						<a href="javascript:void(0);" class="navigation-buttonn up" onclick="pan(0, -25)">
+							&uarr;
+						</a>
+					</div>
+					<div class="map-navigation-buttonn down">
+						<a href="javascript:void(0);" class="navigation-buttonn down" onclick="pan(0, 25)">
+							&darr;
+						</a>
+					</div>
+					<div class="map-navigation-buttonn left">
+						<a href="javascript:void(0);" class="navigation-buttonn left" onclick="pan(-50, 0)">
+							&larr;
+						</a>
+					</div>
+					<div class="map-navigation-buttonn right">
+						<a href="javascript:void(0);" class="navigation-buttonn right" onclick="pan(50, 0)">
+							&rarr;
+						</a>
+					</div>
+					<div class="map-navigation-buttonn zoomin">
+						<a href="javascript:void(0);" class="navigation-buttonn zoomin" onclick="zoom(1.25)">
+							&plus;
+						</a>
+					</div>
+					<div class="map-navigation-buttonn zoomout">
+						<a href="javascript:void(0);" class="navigation-buttonn zoomout" onclick="zoom(0.8)">
+							&minus;
+						</a>
+					</div>
+					<div class="map-navigation-buttonn home">
+						<a href="javascript:void(0);" class="navigation-buttonn home" onclick="home(0, 0, 0, 0, 0, 0)">
+							&#8962;
+						</a>
+					</div>
+				</div>
 			</div>
 
-			<div class="container-articles">
+			<div class="blankDiv"></div>
+		
+			<div class="container-map-info">
+				<div class="container-statistics">
+					Here Goes: The general statistics Pane
+				</div>
+
+				<div class="container-articles">
 				Here Goes: The articles Pane
+				</div>
 			</div>
-
-        </div>
+		</div>
+		<script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>  <!-- https://github.com/anvaka/panzoom -->
         <script src="{{ url_for('static', filename='styles/scripts.js') }}"></script>
     </body>
 </html>

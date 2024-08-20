@@ -59,3 +59,39 @@ function home() {
   console.log(logMessage)
 }
 // end map zoom-pan
+
+
+var instance = panzoom(document.getElementById('matrix-group'));
+
+instance.on('panstart', function(e) {
+  console.log('Fired when pan is just started ', e);
+  // Note: e === instance.
+});
+
+instance.on('pan', function(e) {
+  console.log('Fired when the scene is being panned', e);
+});
+
+instance.on('panend', function(e) {
+  console.log('Fired when pan ended', e);
+});
+
+instance.on('zoom', function(e) {
+  console.log('Fired when scene is zoomed', e);
+});
+
+instance.on('transform', function(e) {
+  // This event will be called along with events above.
+  console.log('Fired when any transformation has happened', e);
+});
+
+// The zoomming panning library requires the element being absolute positioned
+// To fix the elements below to the refular dom flow, I have insert a blank element
+// below the absolute positioned one and use the lines below to get the absolute positioned
+// elemet height and make the blank element this height to force the other elements follow
+// through  
+let absoluteDivHeight = document.getElementsByTagName('svg')[0].height.animVal.value;
+console.log(absoluteDivHeight)
+let blankDiv = document.getElementsByClassName('blankDiv')[0];
+blankDiv.style.height = absoluteDivHeight - 20 + "px";
+blankDiv.style.width = "0px";
