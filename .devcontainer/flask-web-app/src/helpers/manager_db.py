@@ -42,12 +42,19 @@ class DBManager:
         cursor.execute(query.RETRIEVE_LOCATIONS)
         result = cursor.fetchall()
         
-        logger.info("Constructing data list")
+        logger.info("Constructing location data list")
         
         locationObj = []
         columnNames = [column[0] for column in cursor.description] # type: ignore
+        columnNames.append("ClassNormalizedName")
         record = ()
         for record in result:
+            # Append ClassNormalizedName to record
+            record_list = list(record)
+            normalized_name = record_list[2].split("_") # type: ignore
+            class_normalized_name = ("-").join(normalized_name) # type: ignore
+            record_list.append(class_normalized_name)
+            record = tuple(record_list)
             locationObj.append(dict(zip(columnNames, record)))
         
         logger.info("List created")

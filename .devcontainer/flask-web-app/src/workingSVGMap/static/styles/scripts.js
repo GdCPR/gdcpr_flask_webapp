@@ -93,8 +93,14 @@ instance.on('transform', function(e) {
 // through
 // Solution from: https://stackoverflow.com/a/55418299
 // Some changes added from original solution to work with my DOM structure
-let absoluteDivHeight = document.getElementsByTagName('svg')[0].height.animVal.value;
-console.log(absoluteDivHeight)
-let blankDiv = document.getElementsByClassName('blankDiv')[0];
+let absoluteDivHeight = document.getElementsByTagName("svg")[0].height.animVal.value;
+let blankDiv = document.getElementsByClassName("blankDiv")[0];
+
 blankDiv.style.height = absoluteDivHeight - 20 + "px";
 blankDiv.style.width = "0px";
+
+let containerMapInfo = document.getElementsByClassName("container-map-info")[0];
+document.addEventListener('DOMContentLoaded', function() {
+  // Show the element
+  containerMapInfo.style.display = "block";
+});

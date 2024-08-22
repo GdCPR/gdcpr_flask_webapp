@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, url_for
 
 app_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-template_dir = os.path.join(app_dir, "testingStuff", "templates")
+template_dir = os.path.join(app_dir, "workingSVGMap", "templates")
 
 app = Flask(__name__, template_folder=template_dir)
 

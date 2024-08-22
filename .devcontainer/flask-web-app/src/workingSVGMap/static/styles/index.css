@@ -40,7 +40,7 @@
 }
 
 * {
-    --border-color: red;
+    /* --border-color: red; */
     box-sizing: border-box;
     border: 0.0001rem solid var(--border-color) !important;
 }
@@ -157,6 +157,7 @@ body {
 
 .content {
     margin-top: calc(2*var(--spacing-body));
+    margin-left: 0;
 }
 
 .container-map-navigation-wrapper {
@@ -203,7 +204,7 @@ a.navigation-buttonn:hover {
 }
 
 svg {
-    width: 100%;
+    width: 98.25%;
     height: 50%;
     position: absolute;
     z-index: 0;
@@ -225,7 +226,7 @@ svg path.municipio:hover {
 }
 
 .container-map-info {
-    position: relative;
+    display: none;
 }
 
 /* .container-statistics {

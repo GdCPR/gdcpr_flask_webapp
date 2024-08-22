@@ -13,6 +13,11 @@ dbmanager = DBManager()
 # Rutas de la aplicación
 @app.route("/", methods=["GET", "POST"])
 def index():
+    # Checking if cliente user clicked a specific location
+    # If true, then the page was already loaded and the client
+    # wants to update table based on request
+    # If false, then is the first time the page was loaded therefore
+    # all articles and locations are sent 
     if request.method == "POST":
         locationid = request.form['location']
         if locationid:
