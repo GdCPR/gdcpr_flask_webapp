@@ -78,10 +78,12 @@ class Article:
         :return: A dictionary containing hash value
         :rtype: dict
         """
-        logger.info("Calculating article hash")
+        logger.info("Calculating article's headline hash")
+        
+        self._headline()
 
         # Create hash object
-        hash_object = hashlib.sha256(self.article.encode('utf-8'))
+        hash_object = hashlib.sha256(self.headline.encode('utf-8'))
         # Get the hexadecimal representation of hash object
         self.hash = hash_object.hexdigest()
 
